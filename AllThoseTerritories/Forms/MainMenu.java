@@ -37,8 +37,6 @@ public class MainMenu extends JFrame{
                 if(Exit.getModel().isPressed()){
                     // TODO: Find out how to close the window after pressing the exit button.
                     // dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
-                    System.exit(0); // Temporary.
                 }
             }
         });
