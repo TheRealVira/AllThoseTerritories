@@ -2,7 +2,6 @@ import Forms.MainMenu;
 import Forms.SplashScreen;
 
 import javax.swing.*;
-import java.awt.event.WindowEvent;
 
 /**
  * Main class to initialize everything. This is where it all begins.
