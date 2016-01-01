@@ -1,10 +1,11 @@
 package Forms;
 
+import Main.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 /**
  * Created by Thomas on 01/01/2016.
@@ -33,12 +34,8 @@ public class MainMenu extends JFrame{
         Exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Test");
-                if(Exit.getModel().isPressed()){
-                    // TODO: Find out how to close the window after pressing the exit button.
-                    // dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
-                    System.exit(0); // Temporary
+                if(e.getSource()==Exit){
+                    Main.SetCurrentFrame(null);
                 }
             }
         });
