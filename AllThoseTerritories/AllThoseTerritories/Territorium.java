@@ -3,6 +3,9 @@ package AllThoseTerritories;
 import java.awt.*;
 import java.util.List;
 
+import static Main.Tools.DrawString;
+import static Main.Tools.Drawline;
+
 /**
  * Created by Thomas on 02/01/2016.
  */
@@ -28,13 +31,11 @@ public class Territorium {
         this.Occupation=occupation;
     }
 
-    public void Draw(Color player1, Color player2){
+    public void Draw(Graphics graphics, Color player1, Color player2){
         // Draw the connections to other Territories
         if(this.Neighbours!=null&&this.Neighbours.size()>1){
-            Point last=this.Neighbours.get(0).GetCapital();
             for (int i=1;i<this.Neighbours.size();i++){
-                // TODO: Implement -> Drawline(last,this.Boundary.get(i),10f,Color.WHITE); // may change the stroke width.
-                last=this.Neighbours.get(i).GetCapital();
+                Drawline((Graphics2D)graphics,this.Capital,this.Neighbours.get(i).Capital,10f,Color.WHITE); // may change the stroke width.
             }
         }
 
@@ -42,13 +43,12 @@ public class Territorium {
         if(Countries!=null){
             for (Landfläche c :
                     this.Countries) {
-                c.Draw(player1,player2);
+                c.Draw(graphics, player1, player2);
             }
         }
 
         if(this.Occupation!=null) {
-            // TODO: Draw the count of the Occupation to the point of the capital.
-            // DrawString(this.Occupation.GetCount(),this.Capital);
+            DrawString(graphics, this.Occupation.GetCount()+"",this.Capital);
         }
     }
 }

@@ -24,7 +24,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SetCurrentFrame(new SplashScreen("resources/AllThoseTerritories.png"));
+        SetCurrentFrame(new SplashScreen("resources/Sprites/AllThoseTerritories.png"));
 
         try {
             Thread.sleep(2500);

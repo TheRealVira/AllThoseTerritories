@@ -13,11 +13,11 @@ public class Kontinent {
         this.Territories=territories;
     }
 
-    public void Draw(Color player1, Color player2){
+    public void Draw(Graphics graphics, Color player1, Color player2){
         if(this.Territories!=null){
             for (Territorium terr:
                  this.Territories) {
-                terr.Draw(player1,player2);
+                terr.Draw(graphics, player1,player2);
             }
         }
     }

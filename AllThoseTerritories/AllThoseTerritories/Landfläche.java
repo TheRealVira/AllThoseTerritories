@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.List;
 
 import static Main.Tools.BrightenColor;
+import static Main.Tools.Drawline;
 
 /**
  * Created by Thomas on 02/01/2016.
@@ -15,11 +16,11 @@ public class Landfläche {
         this.Boundary=boundary;
     }
 
-    public void Draw(Color player1, Color player2){
+    public void Draw(Graphics graphics, Color player1, Color player2){
         if(this.Boundary!=null&&this.Boundary.size()>1) {
             Point last=this.Boundary.get(0);
             for (int i=1;i<this.Boundary.size();i++){
-                // TODO: Implement -> Drawline(last,this.Boundary.get(i),10f,Color.DARK_GRAY); // may change the stroke width.
+                Drawline((Graphics2D)graphics, last, this.Boundary.get(i), 5f, Color.DARK_GRAY); // may change the stroke width.
                 last=this.Boundary.get(i);
             }
 

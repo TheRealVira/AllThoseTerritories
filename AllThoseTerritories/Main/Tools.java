@@ -18,4 +18,24 @@ public class Tools {
                 color.getAlpha()
         );
     }
+
+    /*
+    Draws a string to via the graphics object.
+     */
+    public static void DrawString(Graphics graphics, String string, Point location){
+        if(graphics!=null&&location!=null){
+            graphics.drawString(string,(int)location.getX(),(int)location.getY());
+        }
+    }
+
+    /*
+    Draws a line.
+     */
+    public static void Drawline(Graphics2D graphics, Point point1, Point point2,float strokeWidth, Color color){
+        if(graphics!=null&&point1!=null&&point2!=null&&color!=null){
+            graphics.setStroke(new BasicStroke(strokeWidth,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+            graphics.setColor(color);
+            graphics.drawLine((int)point1.getX(),(int)point1.getY(),(int)point2.getX(),(int)point2.getY());
+        }
+    }
 }
