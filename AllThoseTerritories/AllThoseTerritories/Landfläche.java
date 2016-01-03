@@ -3,7 +3,6 @@ package AllThoseTerritories;
 import java.awt.*;
 import java.util.List;
 
-import static Main.Tools.BrightenColor;
 import static Main.Tools.Drawline;
 
 /**
@@ -16,32 +15,21 @@ public class Landfläche {
         this.Boundary=boundary;
     }
 
-    public void Draw(Graphics graphics, Color player1, Color player2){
+    public void Draw(Graphics graphics, Color color){
         if(this.Boundary!=null&&this.Boundary.size()>1) {
+            /* TODO: Implement -> FillPolygon(this.Boundary,Color)
+            FillPolygon(this.Boundary,color);
+             */
+
             Point last=this.Boundary.get(0);
             for (int i=1;i<this.Boundary.size();i++){
                 Drawline((Graphics2D)graphics, last, this.Boundary.get(i), 5f, Color.DARK_GRAY); // may change the stroke width.
                 last=this.Boundary.get(i);
             }
-
-            // TODO: Implement -> FillPolygon(this.Boundary,Color)
-            /* TODO: Implement -> IsPointInPolygon(this.Boundary,Cursor)
-
-            (if implemented copy paste the code out of the documentation)
-
-            FillPolygon(this.Boundary,
-                    IsPointInPolygon(this.Boundary,Cursor)?
-                    (this.Occupation.State==null?
-                        BrightenColor(Color.LIGHT_GRAY,0.25):
-                        this.Occupation.State?
-                            BrightenColor(player1,0.25):
-                            BrightenColor(player2,0.25)):
-                    (this.Occupation.State==null?
-                       Color.LIGHT_GRAY:
-                       this.Occupation.State?
-                            player1:
-                            player2));
-             */
         }
+    }
+
+    public boolean CursorHover(){
+        return false; // TODO: Implement -> IsPointInPolygon(this.Boundary,Cursor)
     }
 }

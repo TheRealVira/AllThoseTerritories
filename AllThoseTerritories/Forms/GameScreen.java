@@ -7,15 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static Main.Tools.Drawline;
-
 /**
  * Created by Thomas on 03/01/2016.
  */
-public class Game extends JFrame{
+public class GameScreen extends JFrame{
     private JPanel GameScreen;
 
-    public Game(Player player1, Player player2, List<Kontinent> continents){
+    public GameScreen(Player player1, Player player2, List<Kontinent> continents){
         super("AllThoseTerritories");
         setSize(1250,680); // We have to add 30 px to spacing issues with swing...
         setResizable(false);
@@ -28,7 +26,7 @@ public class Game extends JFrame{
                     for (Kontinent c :
                             continents) {
                         if (c != null) {
-                            c.Draw(g, Color.GREEN,Color.RED);
+                            c.Draw(g, player1.Color,player2.Color);
                         }
                     }
                 }

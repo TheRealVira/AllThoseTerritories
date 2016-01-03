@@ -19,6 +19,15 @@ public class Tools {
         );
     }
 
+    public static Color NegateColor(Color color){
+        return new Color(
+                255-color.getRed(),
+                255-color.getGreen(),
+                255-color.getBlue(),
+                color.getAlpha()
+        );
+    }
+
     /*
     Draws a string to via the graphics object.
      */

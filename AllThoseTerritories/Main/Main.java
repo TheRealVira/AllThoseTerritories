@@ -1,6 +1,6 @@
 package Main;
 
-import Forms.MainMenu;
+import Forms.MainMenuScreen;
 import Forms.SplashScreen;
 
 import javax.swing.*;
@@ -32,6 +32,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        SetCurrentFrame(new MainMenu());
+        SetCurrentFrame(new MainMenuScreen());
     }
 }

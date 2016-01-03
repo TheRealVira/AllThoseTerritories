@@ -3,6 +3,7 @@ package AllThoseTerritories;
 import java.awt.*;
 import java.util.List;
 
+import static Main.Tools.BrightenColor;
 import static Main.Tools.DrawString;
 import static Main.Tools.Drawline;
 
@@ -41,9 +42,28 @@ public class Territorium {
 
         // Draw all countries above the connections.
         if(Countries!=null){
+            boolean hover=false;
             for (Landfläche c :
                     this.Countries) {
-                c.Draw(graphics, player1, player2);
+                if(c.CursorHover()){
+                    hover=true;
+                    break;
+                }
+            }
+
+            for (Landfläche c :
+                    this.Countries) {
+                c.Draw(graphics, hover? // That '?' statement will determine the color of the country
+                        (this.Occupation.State==null?
+                                BrightenColor(Color.LIGHT_GRAY,0.25):
+                                this.Occupation.State?
+                                        BrightenColor(player1,0.25):
+                                        BrightenColor(player2,0.25)):
+                        (this.Occupation.State==null?
+                                Color.LIGHT_GRAY:
+                                this.Occupation.State?
+                                        player1:
+                                        player2));;
             }
         }
 
