@@ -1,35 +1,44 @@
 package AllThoseTerritories;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
 import static Main.Tools.Drawline;
+import static Main.Tools.GetCursorLocation;
 
 /**
  * Created by Thomas on 02/01/2016.
  */
 public class Landfläche {
-    private List<Point> Boundary;
+    private Polygon Boundary;
 
     public Landfläche(List<Point> boundary){
-        this.Boundary=boundary;
-    }
-
-    public void Draw(Graphics graphics, Color color){
-        if(this.Boundary!=null&&this.Boundary.size()>1) {
-            /* TODO: Implement -> FillPolygon(this.Boundary,Color)
-            FillPolygon(this.Boundary,color);
-             */
-
-            Point last=this.Boundary.get(0);
-            for (int i=1;i<this.Boundary.size();i++){
-                Drawline((Graphics2D)graphics, last, this.Boundary.get(i), 5f, Color.DARK_GRAY); // may change the stroke width.
-                last=this.Boundary.get(i);
+        if(boundary!=null) {
+            int x[]=new int[boundary.size()],y[]=new int[boundary.size()];
+            for(int i=0;i<boundary.size();i++){
+                x[i]=(int)boundary.get(i).getX();
+                y[i]=(int)boundary.get(i).getY();
             }
+            this.Boundary = new Polygon(x,y,boundary.size());
         }
     }
 
-    public boolean CursorHover(){
-        return false; // TODO: Implement -> IsPointInPolygon(this.Boundary,Cursor)
+    public void Draw(Graphics graphics, Color color){
+        if(this.Boundary!=null) {
+            graphics.setColor(color);
+            graphics.fillPolygon(this.Boundary);
+            graphics.setColor(Color.DARK_GRAY);
+            Graphics2D g2D=((Graphics2D)graphics);
+            g2D.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            g2D.setStroke(new BasicStroke(2,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+            graphics.drawPolygon(this.Boundary);
+        }
+    }
+
+    public boolean CursorHover(JFrame frame){
+       return this.Boundary!=null&&this.Boundary.contains(GetCursorLocation(frame));
     }
 }

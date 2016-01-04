@@ -1,10 +1,15 @@
 package AllThoseTerritories;
 
+import com.sun.xml.internal.ws.resources.DispatchMessages;
+
+import javax.swing.*;
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
+import java.util.LinkedList;
 import java.util.List;
 
 import static Main.Tools.BrightenColor;
-import static Main.Tools.DrawString;
 import static Main.Tools.Drawline;
 
 /**
@@ -12,40 +17,60 @@ import static Main.Tools.Drawline;
  */
 public class Territorium {
     private List<Landfläche>Countries;
-    private String Name;
-    private Point Capital;
+    public String Name;
+    public Point Capital;
     private List<Territorium>Neighbours;
     private Armee Occupation;
 
-    /*
-    Securely create a copy of the capital, so it is secure from beeing chaged outside.
-     */
-    public Point GetCapital(){
-        return (Point)this.Capital.clone();
-    }
-
-    public Territorium(List<Landfläche> countries, String name, Point capital, List<Territorium> neighbours, Armee occupation){
-        this.Countries=countries;
+    public Territorium(Landfläche country, String name, Point capital, List<Territorium> neighbours, Armee occupation){
+        this.Countries=new LinkedList<>();
+        if(country!=null) {
+            this.Countries.add(country);
+        }
         this.Name=name;
         this.Capital=capital;
-        this.Neighbours=neighbours;
+        if(neighbours!=null) {
+            this.Neighbours = neighbours;
+        }else{
+            this.Neighbours=new LinkedList<>();
+        }
         this.Occupation=occupation;
     }
 
-    public void Draw(Graphics graphics, Color player1, Color player2){
+    public void AddCountry(Landfläche toAdd){
+        if(this.Countries!=null&&toAdd!=null){
+            this.Countries.add(toAdd);
+        }
+    }
+
+    public void AddNeighour(Territorium terr){
+        if(this.Neighbours!=null&&!this.Neighbours.contains(terr)){
+            this.Neighbours.add(terr);
+            terr.AddNeighour(this);
+        }
+    }
+
+    public void DrawConnections(Graphics graphics, Dimension screenDimension){
         // Draw the connections to other Territories
-        if(this.Neighbours!=null&&this.Neighbours.size()>1){
-            for (int i=1;i<this.Neighbours.size();i++){
-                Drawline((Graphics2D)graphics,this.Capital,this.Neighbours.get(i).Capital,10f,Color.WHITE); // may change the stroke width.
+        if(this.Neighbours!=null&&this.Neighbours.size()>0){
+            for (int i=0;i<this.Neighbours.size();i++){
+                Drawline((Graphics2D)graphics,this.Capital,CalculateShortestWay(this.Capital,this.Neighbours.get(i).Capital,screenDimension)/*this.Neighbours.get(i).Capital*/,2f,Color.WHITE); // may change the stroke width.
             }
         }
+    }
 
+    private Point CalculateShortestWay(Point point1, Point point2, Dimension dimensions){
+        // TODO: Return the shortest path from point1 to point2. (With screen wrap!)
+        return point2;
+    }
+
+    public void Draw(Graphics graphics, JFrame frame, Color player1, Color player2){
         // Draw all countries above the connections.
         if(Countries!=null){
             boolean hover=false;
             for (Landfläche c :
                     this.Countries) {
-                if(c.CursorHover()){
+                if(c.CursorHover(frame)){
                     hover=true;
                     break;
                 }
@@ -68,7 +93,9 @@ public class Territorium {
         }
 
         if(this.Occupation!=null) {
-            DrawString(graphics, this.Occupation.GetCount()+"",this.Capital);
+            AttributedString text=new AttributedString(this.Occupation.GetCount()+"");
+            text.addAttribute(TextAttribute.BACKGROUND,Color.WHITE,0,(this.Occupation.GetCount()+"").length());
+            graphics.drawString(text.getIterator(),(int)this.Capital.x,(int)this.Capital.y);
         }
     }
 }

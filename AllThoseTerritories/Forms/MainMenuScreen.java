@@ -20,8 +20,8 @@ public class MainMenuScreen extends JFrame{
     private JButton Exit=new JButton("EXIT");
     private JComboBox MapList=new JComboBox();
     private JLabel MapSelectedText=new JLabel();
-    private ColorChooserButton Player1Color=new ColorChooserButton(Color.GREEN,"Coose a color for Player1");
-    private ColorChooserButton Player2Color=new ColorChooserButton(Color.RED,"Choose a color for Player2");
+    private ColorChooserButton Player1Color=new ColorChooserButton(new Color(0,200,0),"Coose a color for Player1");
+    private ColorChooserButton Player2Color=new ColorChooserButton(new Color(200,0,0),"Choose a color for Player2");
     private JCheckBox IsPlayer1ABot=new JCheckBox();
     private JCheckBox IsPlayer2ABot=new JCheckBox();
 

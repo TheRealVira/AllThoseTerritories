@@ -1,5 +1,6 @@
 package Main;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -29,15 +30,6 @@ public class Tools {
     }
 
     /*
-    Draws a string to via the graphics object.
-     */
-    public static void DrawString(Graphics graphics, String string, Point location){
-        if(graphics!=null&&location!=null){
-            graphics.drawString(string,(int)location.getX(),(int)location.getY());
-        }
-    }
-
-    /*
     Draws a line.
      */
     public static void Drawline(Graphics2D graphics, Point point1, Point point2,float strokeWidth, Color color){
@@ -46,5 +38,12 @@ public class Tools {
             graphics.setColor(color);
             graphics.drawLine((int)point1.getX(),(int)point1.getY(),(int)point2.getX(),(int)point2.getY());
         }
+    }
+
+    /*
+    Returns the location of the mouse
+     */
+    public static Point GetCursorLocation(JFrame frame){
+        return frame!=null?new Point(MouseInfo.getPointerInfo().getLocation().x-frame.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-frame.getLocationOnScreen().y-25):new Point(0,0);
     }
 }
