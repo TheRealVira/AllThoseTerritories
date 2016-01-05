@@ -107,12 +107,12 @@ public class BattleScreen {
                     terr1Label.setText(terr1.Name+" ("+armee1.Count+")");
                     terr2Label.setText(terr2.Name+" ("+armee2.Count+")");
 
-                    if(armee1.Count==0){
+                    if(armee1.Count<1){
                         Working=false;
                         battleFrame.setVisible(false);
                         battleFrame.dispose();
                     }
-                    else if(armee2.Count==0){
+                    else if(armee2.Count<1){
                         Working=false;
                         terr2.Occupation=armee1;
                         terr2.Occupation.Count++;
