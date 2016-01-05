@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class Kontinent {
     private List<Territorium>Territories;
-    private int Verstärkung;
+    private int Bonus;
     public String Name;
 
-    public int GetVerstärkung(){
-        return this.Verstärkung;
+    public int GetBonus(){
+        return this.Bonus;
     }
 
     public void AddTerritory(Territorium territorium){
@@ -23,21 +23,21 @@ public class Kontinent {
         }
     }
 
-    public Kontinent(String name, int verstärkung){
+    public Kontinent(String name, int bonus){
         this.Territories=new LinkedList<>();
         this.Name=name;
-        this.Verstärkung=verstärkung;
+        this.Bonus = bonus;
     }
 
-    public Kontinent(List<Territorium>territories,String name, int verstärkung){
+    public Kontinent(List<Territorium>territories,String name, int bonus){
         this.Territories=territories;
-        this.Verstärkung=verstärkung;
+        this.Bonus = bonus;
         this.Name=name;
     }
 
-    public Kontinent(Territorium territorium,String name,int verstärkung){
+    public Kontinent(Territorium territorium,String name,int bonus){
         this.Territories=new LinkedList<>();
-        this.Verstärkung=verstärkung;
+        this.Bonus = bonus;
         this.Name=name;
 
         if(territorium!=null) {
@@ -61,5 +61,53 @@ public class Kontinent {
                 terr.DrawConnections(graphics, screenDimension);
             }
         }
+    }
+
+    public boolean AllTerritoriesAreSet(){
+        if(this.Territories==null){
+            return true;
+        }
+
+        for (Territorium ter :
+             this.Territories) {
+            if(!ter.IsSet()){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Territorium GetTerritoriumFromPosition(Point point, JFrame frame){
+        if(this.Territories==null){
+            return null;
+        }
+
+        for (Territorium terr :
+                this.Territories) {
+            if(terr.ContainsPoint(point,frame)){
+                return terr;
+            }
+        }
+
+        return null;
+    }
+
+    public int GetCountOfOwnedTerritories(boolean player1){
+        if(this.Territories==null){
+            return 0;
+        }
+
+        int toRet=0;
+        for (Territorium ter :
+                this.Territories) {
+            toRet+=ter.Occupation.State!=null&&player1==ter.Occupation.State?1:0;
+        }
+
+        return toRet;
+    }
+
+    public boolean OwnedBy(boolean player1){
+        return this.Territories!=null&&GetCountOfOwnedTerritories(player1)==this.Territories.size();
     }
 }

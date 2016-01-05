@@ -12,11 +12,7 @@ public class Armee {
     true:  Player1
      */
     public Boolean State;
-    private int Count;
-
-    public int GetCount(){
-        return this.Count;
-    }
+    public int Count;
 
     public Armee(Territorium terr/*if null than Verstärkungstrupp*/,Boolean state/*we only need three stats, so a nullable boolean should work wonders*/, int count){
         this.MyTerr=terr;

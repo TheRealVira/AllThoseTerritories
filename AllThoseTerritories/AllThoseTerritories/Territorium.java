@@ -20,7 +20,7 @@ public class Territorium {
     public String Name;
     public Point Capital;
     private List<Territorium>Neighbours;
-    private Armee Occupation;
+    public Armee Occupation;
 
     public Territorium(Landfläche country, String name, Point capital, List<Territorium> neighbours, Armee occupation){
         this.Countries=new LinkedList<>();
@@ -93,9 +93,43 @@ public class Territorium {
         }
 
         if(this.Occupation!=null) {
-            AttributedString text=new AttributedString(this.Occupation.GetCount()+"");
-            text.addAttribute(TextAttribute.BACKGROUND,Color.WHITE,0,(this.Occupation.GetCount()+"").length());
+            AttributedString text=new AttributedString(this.Occupation.Count+"");
+            text.addAttribute(TextAttribute.BACKGROUND,Color.WHITE,0,(this.Occupation.Count+"").length());
             graphics.drawString(text.getIterator(),(int)this.Capital.x,(int)this.Capital.y);
         }
+    }
+
+    public boolean IsSet(){
+        return this.Occupation.State!=null;
+    }
+
+    public void Set(Boolean state, int membercount){
+        this.Occupation.State=state;
+        this.Occupation.Count=membercount;
+    }
+
+    public boolean ContainsPoint(Point point, JFrame frame) {
+        if(this.Countries==null){
+            return false;
+        }
+
+        for (Landfläche lf :
+                this.Countries) {
+            if(lf.CursorHover(frame)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean ContainsTerritorium(String name) {
+        for (Territorium ter :
+                this.Neighbours) {
+            if (ter.Name.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -78,8 +78,8 @@ public class MainMenuScreen extends JFrame{
                 if(e.getSource()==StartGame){
                     Main.SetCurrentFrame(
                             new GameScreen(
-                                    IsPlayer1ABot.isSelected()?new Computer(Player1Color.MyColor):new Human(Player1Color.MyColor),
-                                    IsPlayer2ABot.isSelected()?new Computer(Player2Color.MyColor):new Human(Player2Color.MyColor),
+                                    IsPlayer1ABot.isSelected()?new Computer(Player1Color.MyColor,true):new Human(Player1Color.MyColor,true),
+                                    IsPlayer2ABot.isSelected()?new Computer(Player2Color.MyColor,false):new Human(Player2Color.MyColor,false),
                                     CreatePlayingFieldsFromFile(
                                             getClass().getClassLoader().getResource("").getFile()+"resources/Maps/"+MapList.getSelectedItem()+".map")));
                 }
