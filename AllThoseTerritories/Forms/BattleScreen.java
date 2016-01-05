@@ -59,7 +59,7 @@ public class BattleScreen {
                 if (e.getSource() == fightButton) {
                     int t1 = 0, nextT1 = 0, t2 = 0, nextT2 = 0;
                     for (int i = 0; i < (armee1.Count > 3 ? 3 : armee1.Count); i++) {
-                        int temp = rand.nextInt(5) + 1;
+                        int temp = rand.nextInt(6) + 1;
                         if (temp > t1) {
                             nextT1 = t1;
                             t1 = temp;
@@ -70,7 +70,7 @@ public class BattleScreen {
                     }
 
                     for (int i = 0; i < (armee2.Count > 1 ? 2 : armee1.Count); i++) {
-                        int temp = rand.nextInt(5) + 1;
+                        int temp = rand.nextInt(6) + 1;
                         if (temp > t2) {
                             nextT2 = t2;
                             t2 = temp;
@@ -127,7 +127,7 @@ public class BattleScreen {
 
         JButton cancelButton=new JButton();
         cancelButton.setText("Cancel");
-        cancelButton.setBounds(battleFrame.getWidth()/2-75,battleFrame.getHeight()-50,100,35);
+        cancelButton.setBounds(battleFrame.getWidth()/2-50,battleFrame.getHeight()-75,100,35);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
