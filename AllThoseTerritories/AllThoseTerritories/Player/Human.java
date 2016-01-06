@@ -76,10 +76,11 @@ public class Human extends Player {
                                         }
                                     } // Wait till finished selecting
 
-                                    BattleScreen.Fight(myTerritorium,atackedOne,attackOfTheTitans,atackedOne.Occupation,rand);
+                                    if(attackOfTheTitans.Count!=0) {
+                                        BattleScreen.Fight(myTerritorium, atackedOne, attackOfTheTitans, atackedOne.Occupation, rand);
+                                    }
                                 }
                             };
-
                             atack.start();
 
                             return myTerritorium.Name+" attacked "+atackedOne.Name+"!";

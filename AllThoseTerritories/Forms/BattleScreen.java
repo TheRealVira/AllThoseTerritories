@@ -6,6 +6,8 @@ import AllThoseTerritories.Territorium;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Random;
 
@@ -92,6 +94,9 @@ public class BattleScreen {
                         armee1.Count--;
                     }
 
+                    terr1CastOfDice.setText((armee1.Count>2?"Rolled:  "+t1+" | "+nextT1:"Rolled:  "+t1));
+                    terr2CastOfDice.setText((armee2.Count>2?"Rolled:  "+t2+" | "+nextT2:"Rolled:  "+t2));
+
                     if (!(armee2.Count == 1 || armee1.Count == 1)) {
                         if (nextT1 > nextT2) {
                             armee2.Count--;
@@ -104,8 +109,6 @@ public class BattleScreen {
                         }
                     }
 
-                    terr1CastOfDice.setText((armee1.Count>2?"Rolled:  "+t1+" | "+nextT1:"Rolled:  "+t1));
-                    terr2CastOfDice.setText((armee2.Count>2?"Rolled:  "+t2+" | "+nextT2:"Rolled:  "+t2));
                     terr1Label.setText(terr1.Name+" ("+armee1.Count+")");
                     terr2Label.setText(terr2.Name+" ("+armee2.Count+")");
 
@@ -143,6 +146,17 @@ public class BattleScreen {
         });
 
         battleFrame.add(cancelButton);
+
+        battleFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                Working=false;
+                terr1.Occupation.Count+=armee1.Count;
+                battleFrame.setVisible(false);
+                battleFrame.dispose();
+            }
+        });
 
         battleFrame.setVisible(true);
     }

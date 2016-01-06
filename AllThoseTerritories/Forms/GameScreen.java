@@ -7,10 +7,7 @@ import AllThoseTerritories.Territorium;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.List;
 import java.util.Random;
 
@@ -270,6 +267,14 @@ public class GameScreen extends JFrame{
         };
         pcPlayerThread.start();
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                PcTimer.stop();
+                DrawTimer.stop();
+            }
+        });
 
         this.CancelSelection.addActionListener(new ActionListener() {
             @Override
@@ -323,12 +328,11 @@ public class GameScreen extends JFrame{
         int toRet=0;
         for (Kontinent con :
                 this.Continents) {
-            int toAdd=con.GetCountOfOwnedTerritories(player1)/3+(con.OwnedBy(player1)?con.GetBonus():0);
 
-            toRet+=(con.OwnedBy(player1)?con.GetBonus():0)+(toAdd<3?3:toAdd);
+            toRet+=(con.OwnedBy(player1)?con.GetBonus():0)+con.GetCountOfOwnedTerritories(player1)/3+(con.OwnedBy(player1)?con.GetBonus():0);
         }
 
-        return toRet;
+        return toRet<3?3:toRet;
     }
 
     private Boolean Winner(){
@@ -338,7 +342,7 @@ public class GameScreen extends JFrame{
         }
 
         for (int i = 1; i < this.Continents.size(); i++) {
-            if(owner!=this.Continents.get(0).OwnedBy(true)||(!this.Continents.get(0).OwnedBy(false)&&!this.Continents.get(0).OwnedBy(true))){
+            if(owner!=this.Continents.get(i).OwnedBy(true)||(!this.Continents.get(i).OwnedBy(false)&&!this.Continents.get(i).OwnedBy(true))){
                 return null;
             }
         }
