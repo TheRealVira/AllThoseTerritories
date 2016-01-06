@@ -27,6 +27,8 @@ public class BattleScreen {
         battleFrame.setSize(500,250);
         battleFrame.setResizable(false);
 
+        battleFrame.setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/FightingBackground.png"))));
+
         JLabel vsLabel=new JLabel();
         vsLabel.setText("VS");
         vsLabel.setBounds(battleFrame.getWidth()/2-10,10,20,35);
@@ -34,12 +36,12 @@ public class BattleScreen {
 
         JLabel terr1Label=new JLabel();
         terr1Label.setText(terr1.Name+" ("+armee1.Count+")");
-        terr1Label.setBounds(35,10,100,35);
+        terr1Label.setBounds(35,10,350,35);
         battleFrame.add(terr1Label);
 
         JLabel terr2Label=new JLabel();
         terr2Label.setText(terr2.Name+" ("+armee2.Count+")");
-        terr2Label.setBounds(battleFrame.getWidth()-70,10,100,35);
+        terr2Label.setBounds(battleFrame.getWidth()-200,10,350,35);
         battleFrame.add(terr2Label);
 
         JLabel terr1CastOfDice=new JLabel();

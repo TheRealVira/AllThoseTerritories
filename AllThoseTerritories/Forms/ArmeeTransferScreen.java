@@ -23,9 +23,11 @@ public class ArmeeTransferScreen extends JFrame {
     public ArmeeTransferScreen(String header, String description, Armee armee1, Armee armee2,boolean armee1AsBorder){
         super(header);
 
-        setSize(500,250);
+        setSize(500,275);
         setResizable(false);
         setLayout(null);
+        setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/TransferBg.png"))));
+
         MaxCount=armee1.Count+armee2.Count+(armee1AsBorder?1:0);
         for (int i=armee1AsBorder?armee1.Count:1;i<MaxCount;i++){
             ArmeeCount.addItem(i);
@@ -37,7 +39,7 @@ public class ArmeeTransferScreen extends JFrame {
         Cancel.setBounds(this.getWidth()-110,this.getHeight()-70,75,35);
         Cancel.setText("Cancel");
         Description.setText(description);
-        Description.setBounds( 35, 35, this.getWidth()-70,35);
+        Description.setBounds( 40, 40, this.getWidth()-70,35);
 
         add(this.ArmeeCount);
         add(this.Accept);

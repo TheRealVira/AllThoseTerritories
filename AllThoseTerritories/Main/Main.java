@@ -17,6 +17,10 @@ public class Main {
             CurrentFrame.dispose(); // Clean exit on last frame.
         }
 
+        if(frame==null){
+            System.exit(0);
+        }
+
         CurrentFrame=frame;
         if(CurrentFrame!=null){
             CurrentFrame.setVisible(true);
