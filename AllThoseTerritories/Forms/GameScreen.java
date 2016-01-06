@@ -1,6 +1,7 @@
 package Forms;
 
 import AllThoseTerritories.Kontinent;
+import AllThoseTerritories.Player.Computer;
 import AllThoseTerritories.Player.Player;
 import AllThoseTerritories.Territorium;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 import static Main.Tools.GetCursorLocation;
+import static Main.Tools.HexColorCode;
 
 /**
  * Created by Thomas on 03/01/2016.
@@ -35,6 +37,10 @@ public class GameScreen extends JFrame{
     private boolean Player1sTurn=true;
 
     private Random Rand;
+
+    private Timer PcTimer, DrawTimer;
+
+    private JLabel Background;
 
     /*
     0=Exit
@@ -60,6 +66,8 @@ public class GameScreen extends JFrame{
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
+                Background.paint(g);
+
                 if (continents != null) {
                     for (Kontinent c :
                             Continents) {
@@ -77,7 +85,7 @@ public class GameScreen extends JFrame{
                 }
 
                 NextRound.updateUI();
-                WhosTurn.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+(Player1sTurn?"1st Players turn":"2nd Players turn")+"</span></html>");
+                WhosTurn.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+(Player1sTurn?"1st Players turn":"2nd Players turn")+"</span> <span style=\"color: #000000; background-color: "+(Player1sTurn?HexColorCode(Player1.Color):HexColorCode(Player2.Color))+"\">[___]</span></html>");
                 Reinforcement.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Reinforement:  "+(Player1sTurn?Player1.Verstärkung.Count:Player2.Verstärkung.Count)+"</span></html>");
                 WhosTurn.updateUI();
                 Reinforcement.updateUI();
@@ -86,14 +94,14 @@ public class GameScreen extends JFrame{
                 Territorium testTerr=GetTerritoriumFromPosition(GetCursorLocation(This));
                 if(testTerr!=null){
                     if(testTerr.Occupation.State==null){
-                        Suggestions.setText("Claim "+testTerr.Name);
+                        Suggestions.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Claim "+testTerr.Name+"</span></html>");
                     }else if(StatesOfPlaying==3) {
-                        Suggestions.setText("Select " + testTerr.Name);
+                        Suggestions.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Select " + testTerr.Name+"</span></html>");
                     }else if(StatesOfPlaying==4) {
                         if (testTerr.Occupation.State == Player1sTurn) {
-                            Suggestions.setText("Move some reinformance to " + testTerr.Name);
+                            Suggestions.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Move some reinformance to " + testTerr.Name+"</span></html>");
                         } else {
-                            Suggestions.setText("Atack " + testTerr.Name);
+                            Suggestions.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Atack " + testTerr.Name+"</span></html>");
                         }
                     }
                 }
@@ -115,16 +123,20 @@ public class GameScreen extends JFrame{
         this.Console.setBounds(100,this.Map.getHeight()-75,this.Map.getWidth()-200,35);
         this.Suggestions.setBounds(100,this.Map.getHeight()-105,this.Map.getWidth()-200,35);
 
-        this.NextRound.setBounds(this.Map.getWidth()-185,getHeight()-70,150,35);
+        this.NextRound.setBounds(this.Map.getWidth()-185,getHeight()-85,150,35);
         this.NextRound.setText("Next Round");
         this.NextRound.setVisible(false);
 
-        this.CancelSelection.setBounds(this.Map.getWidth()-185,getHeight()-105,150,35);
+        this.CancelSelection.setBounds(this.Map.getWidth()-185,getHeight()-120,150,35);
         this.CancelSelection.setText("Cancel selection");
         this.CancelSelection.setVisible(false);
 
         this.WhosTurn.setBounds(getWidth()/2-35,10,150,35);
         this.Reinforcement.setBounds(getWidth()/2-35,45,150,35);
+
+        this.Background=new JLabel();
+        this.Background.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/Sprites/GameBackground.png")));
+        this.Background.setBounds(0,0,getWidth(),getHeight());
 
         this.Map.add(this.NextRound);
         this.Map.add(this.Console);
@@ -133,7 +145,7 @@ public class GameScreen extends JFrame{
         this.Map.add(this.Suggestions);
         this.Map.add(this.CancelSelection);
 
-        getContentPane().add(this.Map);
+        add(this.Map);
 
         Rand=new Random();
 
@@ -142,10 +154,10 @@ public class GameScreen extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
-                Territorium testTerr=GetTerritoriumFromPosition(GetCursorLocation(This));
-                int selectedTerCount=0;
-                if(StatesOfPlaying==1){
-                    if(Continents!=null){
+                Territorium testTerr = GetTerritoriumFromPosition(GetCursorLocation(This));
+                int selectedTerCount = 0;
+                if (StatesOfPlaying == 1) {
+                    if (Continents != null) {
                         for (Kontinent kon :
                                 Continents) {
                             selectedTerCount += kon.GetCountOfOwnedTerritories(Player1sTurn);
@@ -153,35 +165,34 @@ public class GameScreen extends JFrame{
                     }
                 }
 
-                if(testTerr!=null){
-                    String bevor=Console.getText();
-                    if(Player1sTurn){
-                        Console.setText(Player1.Update(StatesOfPlaying,testTerr, Rand));
-                    }
-                    else{
-                        Console.setText(Player2.Update(StatesOfPlaying,testTerr, Rand));
+                if (testTerr != null) {
+                    String bevor = Console.getText();
+                    if (Player1sTurn) {
+                        Console.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+Player1.Update(StatesOfPlaying, testTerr, Rand)+"</span></html>");
+                    } else {
+                        Console.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+Player2.Update(StatesOfPlaying, testTerr, Rand)+"</span></html>");
                     }
 
-                    if(!bevor.equals(Console.getText())) {
-                        if(StatesOfPlaying==1) {
+                    if (!bevor.equals(Console.getText())) {
+                        if (StatesOfPlaying == 1) {
                             CheckIfAllContinentsAreSet();
 
-                            int check=0;
-                            if(Continents!=null){
+                            int check = 0;
+                            if (Continents != null) {
                                 for (Kontinent kon :
                                         Continents) {
                                     check += kon.GetCountOfOwnedTerritories(Player1sTurn);
                                 }
                             }
 
-                            if(check!=selectedTerCount) {
+                            if (check != selectedTerCount) {
                                 NextRound.setVisible(true);
                             }
-                        }else if(StatesOfPlaying==3){
+                        } else if (StatesOfPlaying == 3) {
                             CancelSelection.setVisible(true);
                             StatesOfPlaying++;
-                        }else if(StatesOfPlaying==4){
-                            StatesOfPlaying=3;
+                        } else if (StatesOfPlaying == 4) {
+                            StatesOfPlaying = 3;
                             CancelSelection.setVisible(false);
                         }
                     }
@@ -217,16 +228,48 @@ public class GameScreen extends JFrame{
         });
 
         Thread drawThread=new Thread(){
-            public void run(){
-               new Timer(100, new ActionListener() {
-                   @Override
-                   public void actionPerformed(ActionEvent e) {
-                       Map.repaint();
-                   }
-               }).start();
+            public void run() {
+                super.run();
+                DrawTimer=new Timer(100, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Map.repaint();
+                    }
+                });
+
+                DrawTimer.start();
             }
         };
         drawThread.start();
+
+        Thread pcPlayerThread=new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                PcTimer =new Timer(100,new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Boolean winner=Winner();
+                        if(winner!=null){
+                            Main.Main.SetCurrentFrame(new WinnerScreen(winner));
+                            PcTimer.stop();
+                            DrawTimer.stop();
+                        }
+                        else {
+                            if (Player1sTurn && Player1.getClass() == Computer.class) {
+                                UpdateComputer();
+                            } else if (!Player1sTurn && Player2.getClass() == Computer.class) {
+                                UpdateComputer();
+                            }
+                        }
+                    }
+                });
+
+                PcTimer.start();
+            }
+        };
+        pcPlayerThread.start();
+
 
         this.CancelSelection.addActionListener(new ActionListener() {
             @Override
@@ -280,18 +323,31 @@ public class GameScreen extends JFrame{
         int toRet=0;
         for (Kontinent con :
                 this.Continents) {
-            // toRet+=con.GetCountOfOwnedTerritories(player1)/3+(con.OwnedBy(player1)?con.GetBonus():0);
-            // We changed the rules, so you don't have to have 3 countries to get one bonus.
-            // Now you get for every country a bonus (with a 33% chance)
-            for (int i=con.GetCountOfOwnedTerritories(player1);i>-1;i--){
-                if(Rand.nextInt(3)==1){
-                    toRet+=1;
-                }
-            }
+            int toAdd=con.GetCountOfOwnedTerritories(player1)/3+(con.OwnedBy(player1)?con.GetBonus():0);
 
-            toRet+=(con.OwnedBy(player1)?con.GetBonus():0);
+            toRet+=(con.OwnedBy(player1)?con.GetBonus():0)+(toAdd<3?3:toAdd);
         }
 
         return toRet;
+    }
+
+    private Boolean Winner(){
+        Boolean owner=this.Continents.get(0).GetTheOwner();
+        if(owner==null){
+            return null;
+        }
+
+        for (int i = 1; i < this.Continents.size(); i++) {
+            if(owner!=this.Continents.get(0).OwnedBy(true)||(!this.Continents.get(0).OwnedBy(false)&&!this.Continents.get(0).OwnedBy(true))){
+                return null;
+            }
+        }
+
+        return owner;
+    }
+
+    private void UpdateComputer(){
+        // TODO: do stuff...
+        Player1sTurn=!Player1sTurn;
     }
 }

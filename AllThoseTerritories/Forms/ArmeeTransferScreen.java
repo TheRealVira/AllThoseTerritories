@@ -20,14 +20,14 @@ public class ArmeeTransferScreen extends JFrame {
     private JFrame This=this;
     public boolean Finished;
 
-    public ArmeeTransferScreen(String header, String description, Armee armee1, Armee armee2,boolean armee2CanBe0){
+    public ArmeeTransferScreen(String header, String description, Armee armee1, Armee armee2,boolean armee1AsBorder){
         super(header);
 
         setSize(500,250);
         setResizable(false);
         setLayout(null);
-        MaxCount=armee1.Count+armee2.Count+(armee2CanBe0?1:0);
-        for (int i=1;i<MaxCount;i++){
+        MaxCount=armee1.Count+armee2.Count+(armee1AsBorder?1:0);
+        for (int i=armee1AsBorder?armee1.Count:1;i<MaxCount;i++){
             ArmeeCount.addItem(i);
         }
 
@@ -53,7 +53,7 @@ public class ArmeeTransferScreen extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==Accept){
                     Armee1.Count=(int)ArmeeCount.getSelectedItem();
-                    Armee2.Count=MaxCount-Armee1.Count-(armee2CanBe0?1:0);
+                    Armee2.Count=MaxCount-Armee1.Count-(armee1AsBorder?1:0);
                     This.dispatchEvent(new WindowEvent(This,WindowEvent.WINDOW_CLOSING));
                 }
             }

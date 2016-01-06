@@ -1,5 +1,7 @@
 package AllThoseTerritories;
 
+import com.sun.istack.internal.Nullable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
@@ -109,5 +111,10 @@ public class Kontinent {
 
     public boolean OwnedBy(boolean player1){
         return this.Territories!=null&&GetCountOfOwnedTerritories(player1)==this.Territories.size();
+    }
+
+    @Nullable
+    public Boolean GetTheOwner(){
+        return OwnedBy(true)?Boolean.TRUE:OwnedBy(false)?Boolean.FALSE:null;
     }
 }

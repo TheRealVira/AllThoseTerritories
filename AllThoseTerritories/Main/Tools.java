@@ -34,6 +34,9 @@ public class Tools {
      */
     public static void Drawline(Graphics2D graphics, Point point1, Point point2,float strokeWidth, Color color){
         if(graphics!=null&&point1!=null&&point2!=null&&color!=null){
+            graphics.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setStroke(new BasicStroke(strokeWidth,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
             graphics.setColor(color);
             graphics.drawLine((int)point1.getX(),(int)point1.getY(),(int)point2.getX(),(int)point2.getY());
@@ -45,5 +48,13 @@ public class Tools {
      */
     public static Point GetCursorLocation(JFrame frame){
         return frame!=null?new Point(MouseInfo.getPointerInfo().getLocation().x-frame.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-frame.getLocationOnScreen().y-25):new Point(0,0);
+    }
+
+    public static String HexColorCode(Color color){
+        if(color!=null){
+            return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+        }
+
+        return "#000000";
     }
 }
