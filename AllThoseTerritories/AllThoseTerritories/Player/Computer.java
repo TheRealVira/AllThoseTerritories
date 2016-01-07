@@ -36,7 +36,7 @@ public class Computer extends Player {
                 this.LastSelected=target;
                 return (this.ImPlayer1?"Player1 ":"Player2 ")+"selected "+target.Name+".";
             case 4: // Select Country
-                if(LastSelected!=null&&LastSelected.ContainsTerritorium(target.Name)||target.Name.equals(LastSelected.Name)) {  // Claim
+                if(LastSelected.ContainsTerritorium(target.Name)||target.Name.equals(LastSelected.Name)) {  // Claim
                     if (target == this.LastSelected&&target!=null&&target.Occupation.State==this.ImPlayer1) {
                         target.Occupation.Count+=this.Verstärkung.Count;
                         this.Verstärkung.Count=0;

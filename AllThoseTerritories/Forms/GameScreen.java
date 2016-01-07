@@ -81,8 +81,10 @@ public class GameScreen extends JFrame{
                 }
 
                 if(Player1sTurn?Player1.Verstärkung.Count==0:Player2.Verstärkung.Count==0) {
-                    NextRound.setVisible(true);
-                    NextRound.updateUI();
+                    if(Player1sTurn?Player1.getClass()!=Computer.class:Player2.getClass()!=Computer.class) {
+                        NextRound.setVisible(true);
+                        NextRound.updateUI();
+                    }
                 }
                 else{
                     NextRound.setVisible(false);
@@ -348,6 +350,7 @@ public class GameScreen extends JFrame{
             e.printStackTrace();
         }*/
 
+        boolean cantMove=false;
         Territorium nextTarget = null;
         SecureCounter++;
         if (this.StatesOfPlaying == 1) {
@@ -356,6 +359,12 @@ public class GameScreen extends JFrame{
                 this.StatesOfPlaying++;
             }
         }
+
+        if(NewRoundStarted){
+            Player1.MovedThisTurn=false;
+            Player2.MovedThisTurn=false;
+        }
+
         if ((this.StatesOfPlaying == 3 || this.StatesOfPlaying == 4) && (this.Player1sTurn ? this.Player1.Verstärkung.Count > 0 : this.Player2.Verstärkung.Count > 0)) {
             nextTarget = GetHeaviestTerritory();
         } else if ((this.StatesOfPlaying == 3)) {
@@ -393,9 +402,8 @@ public class GameScreen extends JFrame{
             }
         }
 
-        if (nextTarget == null||SecureCounter>15) {
+        if(nextTarget==null||(Player1sTurn?Player1.MovedThisTurn:Player2.MovedThisTurn)){
             NextRound();
-            SecureCounter=0;
             return;
         }
 
@@ -405,16 +413,29 @@ public class GameScreen extends JFrame{
             Console.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">" + Player2.Update(StatesOfPlaying, nextTarget, Rand) + "</span></html>");
         }
 
+        NewRoundStarted=false;
+
+        if(StatesOfPlaying==2){
+            StatesOfPlaying=3;
+            return;
+        }
+
         if(StatesOfPlaying==1) {
             CheckIfAllContinentsAreSet();
         }
 
-        if(StatesOfPlaying==4){
-            NextRound();
+        if(StatesOfPlaying==3){
+            if(nextTarget==null){
+                NextRound();
+                return;
+            }
+
+            StatesOfPlaying=4;
+            return;
         }
 
-        if(StatesOfPlaying==3){
-            StatesOfPlaying=4;
+        if(StatesOfPlaying==4){
+            StatesOfPlaying=3;
         }
 
         if (this.StatesOfPlaying == 1) {
@@ -451,9 +472,11 @@ public class GameScreen extends JFrame{
         return null;
     }
 
+    private boolean NewRoundStarted;
     private void NextRound(){
         StatesOfPlaying=StatesOfPlaying>1?2:1;
         Player1sTurn=!Player1sTurn;
+        NewRoundStarted=true;
 
         if(StatesOfPlaying==1||((Player1sTurn && Player1.getClass() == Computer.class)||(!Player1sTurn && Player2.getClass() == Computer.class))) {
             NextRound.setVisible(false);
