@@ -117,4 +117,35 @@ public class Kontinent {
     public Boolean GetTheOwner(){
         return OwnedBy(true)?Boolean.TRUE:OwnedBy(false)?Boolean.FALSE:null;
     }
+
+    public Territorium GetFirstNotOwnedTerretorium(){
+        if(this.Territories==null||this.Territories.size()==0){
+            return null;
+        }
+
+        for (Territorium ter :
+                this.Territories) {
+            if(ter.Occupation.State==null){
+                return ter;
+            }
+        }
+
+        return null; // Nothing found
+    }
+
+    public Territorium GetHeaviestTerritory(boolean player1){
+        if(this.Territories==null||this.Territories.size()==0){
+            return null;
+        }
+
+        Territorium toRet=null;
+        for (Territorium ter :
+                this.Territories) {
+            if(ter.Occupation.State!=null&&ter.Occupation.State==player1&&(toRet==null||toRet.Occupation.Count<ter.Occupation.Count)){
+                toRet=ter;
+            }
+        }
+
+        return toRet;
+    }
 }

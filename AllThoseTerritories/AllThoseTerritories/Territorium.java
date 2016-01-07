@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Territorium {
     private List<Landfläche>Countries;
     public String Name;
     public Point Capital;
-    private List<Territorium>Neighbours;
+    public List<Territorium>Neighbours;
     public Armee Occupation;
 
     public Territorium(Landfläche country, String name, Point capital, List<Territorium> neighbours, Armee occupation){
@@ -131,5 +132,31 @@ public class Territorium {
             }
         }
         return false;
+    }
+
+    public Territorium GetNextStepToEnemie(boolean player1, int armieCount){
+        return CalculateNextStep(player1,true,armieCount, null);
+    }
+
+    private Territorium CalculateNextStep(boolean player1,boolean firstLayer, int armieCount, List<Territorium>checked){
+        if(checked==null){
+            checked=new LinkedList<>();
+            checked.add(this);
+        }
+
+        for (Territorium ter :
+                this.Neighbours) {
+            if(!checked.contains(ter)) {
+                if (ter.Occupation.State != null && ter.Occupation.State != player1&&ter.Occupation.Count<armieCount) { // Fouund enemy
+                    return this;
+                } else {
+                    checked.add(ter);
+                    Territorium temp= ter.CalculateNextStep(player1,false, armieCount, checked);
+                    return temp!=null?(firstLayer?temp:this):null;
+                }
+            }
+        }
+
+        return null;
     }
 }

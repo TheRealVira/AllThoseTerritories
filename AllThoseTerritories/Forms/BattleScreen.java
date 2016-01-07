@@ -61,53 +61,7 @@ public class BattleScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == fightButton) {
-                    int t1 = 0, nextT1 = 0, t2 = 0, nextT2 = 0;
-                    for (int i = 0; i < (armee1.Count > 3 ? 3 : armee1.Count); i++) {
-                        int temp = rand.nextInt(6) + 1;
-                        if (temp > t1) {
-                            nextT1 = t1;
-                            t1 = temp;
-                        }
-                        else if(temp==t1){
-                            nextT1=t1;
-                        }
-                    }
-
-                    for (int i = 0; i < (armee2.Count > 1 ? 2 : armee1.Count); i++) {
-                        int temp = rand.nextInt(6) + 1;
-                        if (temp > t2) {
-                            nextT2 = t2;
-                            t2 = temp;
-                        }
-                        else if(temp==t2){
-                            nextT2=t2;
-                        }
-                    }
-
-                    if (t1 > t2) {
-                        armee2.Count--;
-                    }
-                    else if(t2>t1){
-                        armee1.Count--;
-                    }
-                    else{
-                        armee1.Count--;
-                    }
-
-                    terr1CastOfDice.setText((armee1.Count>2?"Rolled:  "+t1+" | "+nextT1:"Rolled:  "+t1));
-                    terr2CastOfDice.setText((armee2.Count>2?"Rolled:  "+t2+" | "+nextT2:"Rolled:  "+t2));
-
-                    if (!(armee2.Count == 1 || armee1.Count == 1)) {
-                        if (nextT1 > nextT2) {
-                            armee2.Count--;
-                        }
-                        else if(nextT1>nextT2){
-                            armee1.Count--;
-                        }
-                        else {
-                            armee1.Count--;
-                        }
-                    }
+                    BattleLogic(armee1,armee2,rand,terr1CastOfDice,terr2CastOfDice);
 
                     terr1Label.setText(terr1.Name+" ("+armee1.Count+")");
                     terr2Label.setText(terr2.Name+" ("+armee2.Count+")");
@@ -120,7 +74,6 @@ public class BattleScreen {
                     else if(armee2.Count<1){
                         Working=false;
                         terr2.Occupation=armee1;
-                        terr2.Occupation.Count++;
                         battleFrame.setVisible(false);
                         battleFrame.dispose();
                     }
@@ -159,5 +112,65 @@ public class BattleScreen {
         });
 
         battleFrame.setVisible(true);
+    }
+
+    public static void FastBattle(Armee armee1,Armee armee2, Random rand){
+        while(armee1.Count>0&&armee2.Count>0) {
+            BattleLogic(armee1,armee2,rand,null,null);
+        }
+    }
+
+    private static void BattleLogic(Armee armee1,Armee armee2,Random rand,JLabel rolled1,JLabel rolled2){
+        int t1 = 0, nextT1 = 0, t2 = 0, nextT2 = 0;
+        for (int i = 0; i < (armee1.Count > 3 ? 3 : armee1.Count); i++) {
+            int temp = rand.nextInt(6) + 1;
+            if (temp > t1) {
+                nextT1 = t1;
+                t1 = temp;
+            }
+            else if(temp==t1){
+                nextT1=t1;
+            }
+        }
+
+        for (int i = 0; i < (armee2.Count > 1 ? 2 : armee2.Count); i++) {
+            int temp = rand.nextInt(6) + 1;
+            if (temp > t2) {
+                nextT2 = t2;
+                t2 = temp;
+            }
+            else if(temp==t2){
+                nextT2=t2;
+            }
+        }
+
+        if (armee2.Count > 1 && armee1.Count > 1) {
+            if (nextT1 > nextT2) {
+                armee2.Count--;
+            }
+            else if(nextT1>nextT2){
+                armee1.Count--;
+            }
+            else {
+                armee1.Count--;
+            }
+        }
+
+        if (t1 > t2) {
+            armee2.Count--;
+        }
+        else if(t2>t1){
+            armee1.Count--;
+        }
+        else{
+            armee1.Count--;
+        }
+
+        if(rolled1!=null) {
+            rolled1.setText((armee1.Count > 2 ? "Rolled:  " + t1 + " | " + nextT1 : "Rolled:  " + t1));
+        }
+        if(rolled2!=null) {
+            rolled2.setText((armee2.Count > 2 ? "Rolled:  " + t2 + " | " + nextT2 : "Rolled:  " + t2));
+        }
     }
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class WinnerScreen extends JFrame {
     public WinnerScreen(boolean Winner){
+        super((Winner?"Player1":"Player2")+" Won!!!");
         setLayout(null);
         setSize(500,275);
         setLocationRelativeTo(null);
