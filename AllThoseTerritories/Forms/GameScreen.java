@@ -273,6 +273,7 @@ public class GameScreen extends JFrame{
                     Player2.LastSelected=null;
                     StatesOfPlaying=3;
                     CancelSelection.setVisible(false);
+                    Console.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">Canceled moves</span></html>");
                 }
             }
         });

@@ -27,7 +27,7 @@ public class MainMenuScreen extends JFrame{
 
     public MainMenuScreen() {
         super("AllThoseTerritories");
-        setSize(1250,680); // We have to add 30 px to spacing issues with swing...
+        setSize(1250,679); // We have to add 29 px to spacing issues with swing...
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());

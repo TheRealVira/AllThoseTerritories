@@ -40,7 +40,7 @@ public class Human extends Player {
                     if (target == this.LastSelected&&target!=null&&target.Occupation.State==this.ImPlayer1) {
                         TransferArmee(
                                 "Set the reinforcement of your backhand or " + target.Name,
-                                "Please select, how many will get to " + target.Name+":",
+                                "Please select, how many will be in " + target.Name+":",
                                 target.Occupation,
                                 this.Verstärkung,
                                 true);
@@ -49,7 +49,7 @@ public class Human extends Player {
                     } else if (target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) { // Transfer
                         TransferArmee(
                                 "Set the reinforcement of " + LastSelected.Name + " or " + target.Name,
-                                "Please select, how many should be transferred to " + target.Name+":",
+                                "Please select, how many should be in " + target.Name+":",
                                 target.Occupation,
                                 LastSelected.Occupation,
                                 false);
