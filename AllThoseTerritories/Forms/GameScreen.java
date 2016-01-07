@@ -447,7 +447,7 @@ public class GameScreen extends JFrame{
         StatesOfPlaying=StatesOfPlaying>1?2:1;
         Player1sTurn=!Player1sTurn;
 
-        if(StatesOfPlaying==1) {
+        if(StatesOfPlaying==1||((Player1sTurn && Player1.getClass() == Computer.class)||(!Player1sTurn && Player2.getClass() == Computer.class))) {
             NextRound.setVisible(false);
         }
         else{

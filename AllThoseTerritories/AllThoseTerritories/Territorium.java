@@ -89,14 +89,14 @@ public class Territorium {
                                 Color.LIGHT_GRAY:
                                 this.Occupation.State?
                                         player1:
-                                        player2));;
+                                        player2));
             }
         }
 
         if(this.Occupation!=null) {
             AttributedString text=new AttributedString(this.Occupation.Count+"");
             text.addAttribute(TextAttribute.BACKGROUND,Color.WHITE,0,(this.Occupation.Count+"").length());
-            graphics.drawString(text.getIterator(),(int)this.Capital.x,(int)this.Capital.y);
+            graphics.drawString(text.getIterator(), this.Capital.x, this.Capital.y);
         }
     }
 
