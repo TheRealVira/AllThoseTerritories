@@ -23,6 +23,7 @@ public abstract class Player {
     public Armee Verstärkung;
     public Territorium LastSelected;
     private ArmeeTransferScreen ArmeeTransfer;
+    public boolean MovedThisTurn;
 
     public boolean FinishedTransfering(){
         return this.ArmeeTransfer.Finished;

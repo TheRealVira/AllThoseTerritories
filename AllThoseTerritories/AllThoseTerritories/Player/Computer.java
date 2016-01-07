@@ -30,6 +30,7 @@ public class Computer extends Player {
                 }
                 break;
             case 2: // Select Country
+                MovedThisTurn=false;
                 return (this.ImPlayer1?"Player1 ":"Player2 ")+"now has "+this.Verstärkung.Count+" reinforcements.";
             case 3: // Select Country
                 this.LastSelected=target;
@@ -42,14 +43,17 @@ public class Computer extends Player {
                         // TODO: Maybe add something smarter...
 
                         return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.Name + " and the backhand.";
-                    } else if (target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) { // Transfer
+                    } else if (!MovedThisTurn&&target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) { // Transfer
                         target.Occupation.Count+=LastSelected.Occupation.Count-1;
                         LastSelected.Occupation.Count=1;
                         // TODO: maybe add something smarter...
 
+                        MovedThisTurn=true;
                         String lastName = LastSelected.Name;
                         LastSelected = null;
                         return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.Name + " and " + lastName + ".";
+                    }else if (!MovedThisTurn&&target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) {
+                        return "Cann't move again this turn";
                     }else if(target.Occupation.State != null && target.Occupation.State != LastSelected.Occupation.State) { // Attack
                         Armee attackOfTheTitans=new Armee(null,this.ImPlayer1,0);
                         Territorium myTerritorium=target.Occupation.State==this.ImPlayer1?target:this.LastSelected; // Get sure, which ones are the players armees

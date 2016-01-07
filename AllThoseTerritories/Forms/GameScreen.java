@@ -36,7 +36,6 @@ public class GameScreen extends JFrame{
     private Random Rand;
 
     private Timer PcTimer, DrawTimer;
-
     private JLabel Background;
 
     /*
@@ -411,9 +410,10 @@ public class GameScreen extends JFrame{
         }
 
         if(StatesOfPlaying==4){
-            StatesOfPlaying=3;
+            NextRound();
         }
-        else if(StatesOfPlaying==3){
+
+        if(StatesOfPlaying==3){
             StatesOfPlaying=4;
         }
 
