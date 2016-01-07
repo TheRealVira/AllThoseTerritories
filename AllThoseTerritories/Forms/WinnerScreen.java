@@ -13,6 +13,7 @@ public class WinnerScreen extends JFrame {
         setLayout(null);
         setSize(500,275);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/WinnerBg.png"))));
 

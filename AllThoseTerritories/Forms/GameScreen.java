@@ -81,7 +81,14 @@ public class GameScreen extends JFrame{
                     }
                 }
 
-                NextRound.updateUI();
+                if(Player1sTurn?Player1.Verstärkung.Count==0:Player2.Verstärkung.Count==0) {
+                    NextRound.setVisible(true);
+                    NextRound.updateUI();
+                }
+                else{
+                    NextRound.setVisible(false);
+                }
+
                 WhosTurn.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+(Player1sTurn?"1st Players turn":"2nd Players turn")+"</span> <span style=\"color: #000000; background-color: "+(Player1sTurn?HexColorCode(Player1.Color):HexColorCode(Player2.Color))+"\">[___]</span></html>");
                 Reinforcement.setText("<html><span style=\"color: #000000; background-color: #FFFFFF\">"+"Reinforement:  "+(Player1sTurn?Player1.Verstärkung.Count:Player2.Verstärkung.Count)+"</span></html>");
                 WhosTurn.updateUI();
