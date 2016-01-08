@@ -135,10 +135,10 @@ public class Territorium {
     }
 
     public Territorium GetNextStepToEnemie(boolean player1, int armieCount){
-        return CalculateNextStep(player1,true,armieCount, null);
+        return CalculateNextStep(player1,0,armieCount, null);
     }
 
-    private Territorium CalculateNextStep(boolean player1,boolean firstLayer, int armieCount, List<Territorium>checked){
+    private Territorium CalculateNextStep(boolean player1,int layer, int armieCount, List<Territorium>checked){  // Cool path finding algorithm
         if(checked==null){
             checked=new LinkedList<>();
             checked.add(this);
@@ -151,9 +151,9 @@ public class Territorium {
                     return this;
                 } else {
                     checked.add(ter);
-                    Territorium temp= ter.CalculateNextStep(player1,false, armieCount, checked);
+                    Territorium temp= ter.CalculateNextStep(player1,layer+1, armieCount, checked);
                     if(temp!=null){
-                        return firstLayer?temp:this;
+                        return layer==0?temp:this;
                     }
                 }
             }
