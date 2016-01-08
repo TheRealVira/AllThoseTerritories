@@ -66,7 +66,7 @@ public class IOHelper {
                         }
 
                         // else add a new Territorium containing the new country
-                        terrs.add(new Territorium(GetLandflächeFromStringArray(infos,offset+2),name,new Point(0,0),null,new Armee(null,null,0)));
+                        terrs.add(new Territorium(GetLandflächeFromStringArray(infos,offset+2),name,new Point(0,0),null,new Armee(null,0)));
                         break;
                     case "capital-of": // sets the capital of a 'Terretorium'
                         if(infos.length>3) { // if there are enough infos...
@@ -87,7 +87,7 @@ public class IOHelper {
                             }
 
                             // else create a new one
-                            terrs.add(new Territorium(null,name,new Point(Integer.parseInt(infos[2+offset]),Integer.parseInt(infos[3+offset])),null,new Armee(null,null,0)));
+                            terrs.add(new Territorium(null,name,new Point(Integer.parseInt(infos[2+offset]),Integer.parseInt(infos[3+offset])),null,new Armee(null,0)));
                         }
 
                         break;
@@ -120,7 +120,7 @@ public class IOHelper {
                                 Territorium neigh=GetTerritoriumByName(terrs,otherSplited[i]);
 
                                 if(neigh==null){
-                                    neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,null,0));
+                                    neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
                                     terrs.add(neigh);
                                 }
 
@@ -130,13 +130,13 @@ public class IOHelper {
                             break;
                         }
 
-                        testTerr=new Territorium(null,name,new Point(0,0),null,new Armee(null,null,0));
+                        testTerr=new Territorium(null,name,new Point(0,0),null,new Armee(null,0));
                         terrs.add(testTerr);
                         for (int i=0;i<otherSplited.length;i++){
                             Territorium neigh=GetTerritoriumByName(terrs,otherSplited[i]);
 
                             if(neigh==null){
-                                neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,null,0));
+                                neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
                                 terrs.add(neigh);
                             }
 
@@ -168,7 +168,7 @@ public class IOHelper {
                                 testTerr=GetTerritoriumByName(terrs,otherSplited[i]);
 
                                 if(testTerr==null){
-                                    testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,null,0));
+                                    testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
                                 }
 
                                 testCon.AddTerritory(testTerr);
@@ -183,7 +183,7 @@ public class IOHelper {
                             testTerr=GetTerritoriumByName(terrs,otherSplited[i]);
 
                             if(testTerr==null){
-                                testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,null,0));
+                                testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
                             }
 
                             testCon.AddTerritory(testTerr);

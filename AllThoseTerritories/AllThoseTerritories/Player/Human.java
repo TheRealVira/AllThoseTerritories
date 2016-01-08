@@ -62,7 +62,7 @@ public class Human extends Player {
                     }else if (!MovedThisTurn&&target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) {
                         return "Cann't move again this turn";
                     }else if(target.Occupation.State != null && target.Occupation.State != LastSelected.Occupation.State) { // Attack
-                        Armee attackOfTheTitans=new Armee(null,this.ImPlayer1,0);
+                        Armee attackOfTheTitans=new Armee(this.ImPlayer1,0);
                         Territorium myTerritorium=target.Occupation.State==this.ImPlayer1?target:this.LastSelected; // Get sure, which ones are the players armees
                         if(myTerritorium.Occupation.Count>1) {
                             Territorium atackedOne = myTerritorium == target ? this.LastSelected : target;

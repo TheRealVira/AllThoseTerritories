@@ -14,7 +14,7 @@ public abstract class Player {
     public Player(Color color, boolean player1){
         this.Color=color;
         this.ImPlayer1=player1;
-        this.Verstärkung=new Armee(null,player1,0);
+        this.Verstärkung=new Armee(player1,0);
     }
 
     public Color Color;
