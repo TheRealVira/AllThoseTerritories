@@ -152,7 +152,9 @@ public class Territorium {
                 } else {
                     checked.add(ter);
                     Territorium temp= ter.CalculateNextStep(player1,false, armieCount, checked);
-                    return temp!=null?(firstLayer?temp:this):null;
+                    if(temp!=null){
+                        return firstLayer?temp:this;
+                    }
                 }
             }
         }
