@@ -81,8 +81,11 @@ public class GameScreen extends JFrame{
                 }
 
                 if(Player1sTurn?Player1.Verstärkung.Count==0:Player2.Verstärkung.Count==0) {
-                    if(Player1sTurn?Player1.getClass()!=Computer.class:Player2.getClass()!=Computer.class) {
+                    if((Player1sTurn?Player1.getClass()!=Computer.class:Player2.getClass()!=Computer.class)&&StatesOfPlaying!=1) {
                         NextRound.setVisible(true);
+                        NextRound.updateUI();
+                    }
+                    else if(StatesOfPlaying==1){
                         NextRound.updateUI();
                     }
                 }
@@ -481,7 +484,7 @@ public class GameScreen extends JFrame{
         if(StatesOfPlaying==1||((Player1sTurn && Player1.getClass() == Computer.class)||(!Player1sTurn && Player2.getClass() == Computer.class))) {
             NextRound.setVisible(false);
         }
-        else{
+        else if(StatesOfPlaying!=1){
             NextRound.setVisible(true);
         }
 
