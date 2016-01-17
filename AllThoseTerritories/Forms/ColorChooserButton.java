@@ -13,15 +13,15 @@ import static Main.Tools.NegateColor;
 public class ColorChooserButton extends JButton {
     public Color MyColor;
 
-    public ColorChooserButton(Color current, String title){
-        MyColor=current;
+    public ColorChooserButton(Color current, String title) {
+        MyColor = current;
         setForeground(NegateColor(MyColor));
         setBackground(MyColor);
 
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MyColor=JColorChooser.showDialog(null,title,MyColor);
+                MyColor = JColorChooser.showDialog(null, title, MyColor);
                 setForeground(NegateColor(MyColor));
                 setBackground(MyColor);
             }

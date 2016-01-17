@@ -15,28 +15,28 @@ import static Main.IOHelper.CreatePlayingFieldsFromFile;
 /**
  * Created by Thomas on 01/01/2016.
  */
-public class MainMenuScreen extends JFrame{
-    private JButton StartGame=new JButton("Start Game");
-    private JButton Exit=new JButton("EXIT");
-    private JComboBox MapList=new JComboBox();
-    private JLabel MapSelectedText=new JLabel();
-    private ColorChooserButton Player1Color=new ColorChooserButton(new Color(0,200,0),"Coose a color for Player1");
-    private ColorChooserButton Player2Color=new ColorChooserButton(new Color(200,0,0),"Choose a color for Player2");
-    private JCheckBox IsPlayer1ABot=new JCheckBox();
-    private JCheckBox IsPlayer2ABot=new JCheckBox();
+public class MainMenuScreen extends JFrame {
+    private JButton StartGame = new JButton("Start Game");
+    private JButton Exit = new JButton("EXIT");
+    private JComboBox MapList = new JComboBox();
+    private JLabel MapSelectedText = new JLabel();
+    private ColorChooserButton Player1Color = new ColorChooserButton(new Color(0, 200, 0), "Coose a color for Player1");
+    private ColorChooserButton Player2Color = new ColorChooserButton(new Color(200, 0, 0), "Choose a color for Player2");
+    private JCheckBox IsPlayer1ABot = new JCheckBox();
+    private JCheckBox IsPlayer2ABot = new JCheckBox();
 
     public MainMenuScreen() {
         super("AllThoseTerritories");
-        setSize(1250,679); // We have to add 29 px to spacing issues with swing...
+        setSize(1250, 679); // We have to add 29 px to spacing issues with swing...
         setResizable(false);
         setLayout(new BorderLayout());
         setContentPane(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("resources/Sprites/ATT.png"))));
         setLayout(null);
 
-        for (File f:
-             new File(getClass().getClassLoader().getResource("").getFile()+"resources/Maps/").listFiles()) {
-            if(f.getName().substring(f.getName().lastIndexOf(".")+1).equals("map")) {
-                MapList.addItem(f.getName().substring(0,f.getName().lastIndexOf(".")));
+        for (File f :
+                new File(getClass().getClassLoader().getResource("").getFile() + "resources/Maps/").listFiles()) {
+            if (f.getName().substring(f.getName().lastIndexOf(".") + 1).equals("map")) {
+                MapList.addItem(f.getName().substring(0, f.getName().lastIndexOf(".")));
             }
         }
 
@@ -45,14 +45,14 @@ public class MainMenuScreen extends JFrame{
         Player2Color.setText("Choose a color for Player2");
         IsPlayer1ABot.setText("Player1 is a bot");
         IsPlayer2ABot.setText("Player2 is a bot");
-        MapList.setBounds(500,50,300,35);
-        Player1Color.setBounds(500,100,250,35);
-        Player2Color.setBounds(500,150,250,35);
-        MapSelectedText.setBounds(400,50,300,35);
-        StartGame.setBounds(50,50,250,50);
-        IsPlayer1ABot.setBounds(50,150,250,50);
-        IsPlayer2ABot.setBounds(50,250,250,50);
-        Exit.setBounds(50,570,100,50);
+        MapList.setBounds(500, 50, 300, 35);
+        Player1Color.setBounds(500, 100, 250, 35);
+        Player2Color.setBounds(500, 150, 250, 35);
+        MapSelectedText.setBounds(400, 50, 300, 35);
+        StartGame.setBounds(50, 50, 250, 50);
+        IsPlayer1ABot.setBounds(50, 150, 250, 50);
+        IsPlayer2ABot.setBounds(50, 250, 250, 50);
+        Exit.setBounds(50, 570, 100, 50);
         add(StartGame);
         add(Exit);
         add(MapList);
@@ -65,7 +65,7 @@ public class MainMenuScreen extends JFrame{
         Exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==Exit){
+                if (e.getSource() == Exit) {
                     Main.SetCurrentFrame(null);
                 }
             }
@@ -74,13 +74,13 @@ public class MainMenuScreen extends JFrame{
         StartGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==StartGame){
+                if (e.getSource() == StartGame) {
                     Main.SetCurrentFrame(
                             new GameScreen(
-                                    IsPlayer1ABot.isSelected()?new Computer(Player1Color.MyColor,true):new Human(Player1Color.MyColor,true),
-                                    IsPlayer2ABot.isSelected()?new Computer(Player2Color.MyColor,false):new Human(Player2Color.MyColor,false),
+                                    IsPlayer1ABot.isSelected() ? new Computer(Player1Color.MyColor, true) : new Human(Player1Color.MyColor, true),
+                                    IsPlayer2ABot.isSelected() ? new Computer(Player2Color.MyColor, false) : new Human(Player2Color.MyColor, false),
                                     CreatePlayingFieldsFromFile(
-                                            getClass().getClassLoader().getResource("").getFile()+"resources/Maps/"+MapList.getSelectedItem()+".map")));
+                                            getClass().getClassLoader().getResource("").getFile() + "resources/Maps/" + MapList.getSelectedItem() + ".map")));
                 }
             }
         });

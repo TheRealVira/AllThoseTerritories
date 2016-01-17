@@ -11,53 +11,53 @@ import java.util.List;
  * Created by Thomas on 02/01/2016.
  */
 public class Kontinent {
-    private List<Territorium>Territories;
+    private List<Territorium> Territories;
     private int Bonus;
     public String Name;
 
-    public int GetBonus(){
+    public int GetBonus() {
         return this.Bonus;
     }
 
-    public void AddTerritory(Territorium territorium){
-        if(this.Territories!=null&&territorium!=null){
+    public void AddTerritory(Territorium territorium) {
+        if (this.Territories != null && territorium != null) {
             this.Territories.add(territorium);
         }
     }
 
-    public Kontinent(String name, int bonus){
-        this.Territories=new LinkedList<>();
-        this.Name=name;
+    public Kontinent(String name, int bonus) {
+        this.Territories = new LinkedList<>();
+        this.Name = name;
         this.Bonus = bonus;
     }
 
-    public Kontinent(List<Territorium>territories,String name, int bonus){
-        this.Territories=territories;
+    public Kontinent(List<Territorium> territories, String name, int bonus) {
+        this.Territories = territories;
         this.Bonus = bonus;
-        this.Name=name;
+        this.Name = name;
     }
 
-    public Kontinent(Territorium territorium,String name,int bonus){
-        this.Territories=new LinkedList<>();
+    public Kontinent(Territorium territorium, String name, int bonus) {
+        this.Territories = new LinkedList<>();
         this.Bonus = bonus;
-        this.Name=name;
+        this.Name = name;
 
-        if(territorium!=null) {
+        if (territorium != null) {
             this.Territories.add(territorium);
         }
     }
 
-    public void Draw(Graphics graphics, JFrame frame, Color player1, Color player2){
-        if(this.Territories!=null){
-            for (Territorium terr:
+    public void Draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
+        if (this.Territories != null) {
+            for (Territorium terr :
                     this.Territories) {
-                terr.Draw(graphics, frame, player1,player2);
+                terr.Draw(graphics, frame, player1, player2);
             }
         }
     }
 
-    public void DrawConnections(Graphics graphics, Dimension screenDimension){
-        if(this.Territories!=null) {
+    public void DrawConnections(Graphics graphics, Dimension screenDimension) {
+        if (this.Territories != null) {
             for (Territorium terr :
                     this.Territories) {
                 terr.DrawConnections(graphics, screenDimension);
@@ -65,14 +65,14 @@ public class Kontinent {
         }
     }
 
-    public boolean AllTerritoriesAreSet(){
-        if(this.Territories==null){
+    public boolean AllTerritoriesAreSet() {
+        if (this.Territories == null) {
             return true;
         }
 
         for (Territorium ter :
-             this.Territories) {
-            if(!ter.IsSet()){
+                this.Territories) {
+            if (!ter.IsSet()) {
                 return false;
             }
         }
@@ -80,14 +80,14 @@ public class Kontinent {
         return true;
     }
 
-    public Territorium GetTerritoriumFromPosition(Point point, JFrame frame){
-        if(this.Territories==null){
+    public Territorium GetTerritoriumFromPosition(Point point, JFrame frame) {
+        if (this.Territories == null) {
             return null;
         }
 
         for (Territorium terr :
                 this.Territories) {
-            if(terr.ContainsPoint(point,frame)){
+            if (terr.ContainsPoint(point, frame)) {
                 return terr;
             }
         }
@@ -95,37 +95,37 @@ public class Kontinent {
         return null;
     }
 
-    public int GetCountOfOwnedTerritories(boolean player1){
-        if(this.Territories==null){
+    public int GetCountOfOwnedTerritories(boolean player1) {
+        if (this.Territories == null) {
             return 0;
         }
 
-        int toRet=0;
+        int toRet = 0;
         for (Territorium ter :
                 this.Territories) {
-            toRet+=ter.Occupation.State!=null&&player1==ter.Occupation.State?1:0;
+            toRet += ter.Occupation.State != null && player1 == ter.Occupation.State ? 1 : 0;
         }
 
         return toRet;
     }
 
-    public boolean OwnedBy(boolean player1){
-        return this.Territories!=null&&GetCountOfOwnedTerritories(player1)==this.Territories.size();
+    public boolean OwnedBy(boolean player1) {
+        return this.Territories != null && GetCountOfOwnedTerritories(player1) == this.Territories.size();
     }
 
     @Nullable
-    public Boolean GetTheOwner(){
-        return OwnedBy(true)?Boolean.TRUE:OwnedBy(false)?Boolean.FALSE:null;
+    public Boolean GetTheOwner() {
+        return OwnedBy(true) ? Boolean.TRUE : OwnedBy(false) ? Boolean.FALSE : null;
     }
 
-    public Territorium GetFirstNotOwnedTerretorium(){
-        if(this.Territories==null||this.Territories.size()==0){
+    public Territorium GetFirstNotOwnedTerretorium() {
+        if (this.Territories == null || this.Territories.size() == 0) {
             return null;
         }
 
         for (Territorium ter :
                 this.Territories) {
-            if(ter.Occupation.State==null){
+            if (ter.Occupation.State == null) {
                 return ter;
             }
         }
@@ -133,16 +133,16 @@ public class Kontinent {
         return null; // Nothing found
     }
 
-    public Territorium GetHeaviestTerritory(boolean player1){
-        if(this.Territories==null||this.Territories.size()==0){
+    public Territorium GetHeaviestTerritory(boolean player1) {
+        if (this.Territories == null || this.Territories.size() == 0) {
             return null;
         }
 
-        Territorium toRet=null;
+        Territorium toRet = null;
         for (Territorium ter :
                 this.Territories) {
-            if(ter.Occupation.State!=null&&ter.Occupation.State==player1&&(toRet==null||toRet.Occupation.Count<ter.Occupation.Count)){
-                toRet=ter;
+            if (ter.Occupation.State != null && ter.Occupation.State == player1 && (toRet == null || toRet.Occupation.Count < ter.Occupation.Count)) {
+                toRet = ter;
             }
         }
 

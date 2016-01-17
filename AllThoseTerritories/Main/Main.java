@@ -11,22 +11,22 @@ import javax.swing.*;
 public class Main {
     public static JFrame CurrentFrame;
 
-    public static void SetCurrentFrame(JFrame frame){
+    public static void SetCurrentFrame(JFrame frame) {
         // Set location of new frame relative to last frame, before disposing the latter.
         if (frame != null)
             frame.setLocationRelativeTo(CurrentFrame);
 
-        if(CurrentFrame!=null) {
+        if (CurrentFrame != null) {
             CurrentFrame.setVisible(false);
             CurrentFrame.dispose(); // Clean exit on last frame.
         }
 
-        if(frame==null){
+        if (frame == null) {
             System.exit(0);
         }
 
-        CurrentFrame=frame;
-        if(CurrentFrame!=null){
+        CurrentFrame = frame;
+        if (CurrentFrame != null) {
             CurrentFrame.setVisible(true);
         }
     }

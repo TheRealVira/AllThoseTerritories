@@ -12,8 +12,8 @@ public class Armee {
     public Boolean State;
     public int Count;
 
-    public Armee(Boolean state/*we only need three stats, so a nullable boolean should work wonders*/, int count){
-        this.State=state;
-        this.Count=count;
+    public Armee(Boolean state/*we only need three stats, so a nullable boolean should work wonders*/, int count) {
+        this.State = state;
+        this.Count = count;
     }
 }

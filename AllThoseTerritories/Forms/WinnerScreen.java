@@ -8,23 +8,23 @@ import java.awt.event.ActionListener;
  * Created by Thomas on 01/01/2016.
  */
 public class WinnerScreen extends JFrame {
-    public WinnerScreen(boolean Winner){
-        super((Winner?"Player1":"Player2")+" Won!!!");
+    public WinnerScreen(boolean Winner) {
+        super((Winner ? "Player1" : "Player2") + " Won!!!");
         setLayout(null);
-        setSize(500,275);
+        setSize(500, 275);
         setLocationRelativeTo(Main.Main.CurrentFrame);
         setResizable(false);
 
         setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/WinnerBg.png"))));
 
-        JLabel winnerLabel=new JLabel();
-        winnerLabel.setText(Winner?"Player1":"Player2");
-        winnerLabel.setBounds(getWidth()/2-35,10,70,35);
+        JLabel winnerLabel = new JLabel();
+        winnerLabel.setText(Winner ? "Player1" : "Player2");
+        winnerLabel.setBounds(getWidth() / 2 - 35, 10, 70, 35);
         add(winnerLabel);
 
-        JButton axidentlyButton=new JButton();
+        JButton axidentlyButton = new JButton();
         axidentlyButton.setText("Exit");
-        axidentlyButton.setBounds(25,getHeight()-85,90,35);
+        axidentlyButton.setBounds(25, getHeight() - 85, 90, 35);
         axidentlyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,9 +33,9 @@ public class WinnerScreen extends JFrame {
         });
         add(axidentlyButton);
 
-        JButton mainMenuButton=new JButton();
+        JButton mainMenuButton = new JButton();
         mainMenuButton.setText("Menu");
-        mainMenuButton.setBounds(getWidth()-115,getHeight()-85,90,35);
+        mainMenuButton.setBounds(getWidth() - 115, getHeight() - 85, 90, 35);
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

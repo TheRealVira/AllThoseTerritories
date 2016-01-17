@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Thomas on 03/01/2016.
  */
 public class IOHelper {
-    public static List<Kontinent>CreatePlayingFieldsFromFile(String file){
+    public static List<Kontinent> CreatePlayingFieldsFromFile(String file) {
         // TODO: Add I/O logik and return a new list containing all the continents of the file.
         //return null;
         /*List<Point>points=new LinkedList<Point>();
@@ -37,39 +37,39 @@ public class IOHelper {
         ^- Test implementation
         */
 
-        List<Kontinent>toRet=new LinkedList<>();
-        try(BufferedReader reader=new BufferedReader(new FileReader(file))){
-            String line="";
-            List<Territorium>terrs=new LinkedList<>();
+        List<Kontinent> toRet = new LinkedList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = "";
+            List<Territorium> terrs = new LinkedList<>();
 
 
-            while((line=reader.readLine())!=null){
-                String infos[]=line.split("\\s+"); // splits the line at every splace
+            while ((line = reader.readLine()) != null) {
+                String infos[] = line.split("\\s+"); // splits the line at every splace
 
-                switch (infos[0]){
+                switch (infos[0]) {
                     case "patch-of":// adds a country to a 'Terretorium'
                         // Get the name of the current Territorium
-                        int offset=1;
-                        String name=infos[1];
-                        while(1+offset<infos.length&&!infos[1+offset].matches("^-?\\d+$")) { // if it isn't an integer
-                            name+=" "+infos[1+offset];
+                        int offset = 1;
+                        String name = infos[1];
+                        while (1 + offset < infos.length && !infos[1 + offset].matches("^-?\\d+$")) { // if it isn't an integer
+                            name += " " + infos[1 + offset];
                             offset++;
                         }
                         offset--;
 
                         // Find the Territorium in our temp list of territoriums (terrs)
-                        Territorium testTerr=GetTerritoriumByName(terrs,name);
+                        Territorium testTerr = GetTerritoriumByName(terrs, name);
 
-                        if(testTerr!=null){ // if it does exist, just add another country
-                            testTerr.AddCountry(GetLandflächeFromStringArray(infos,offset+2));
+                        if (testTerr != null) { // if it does exist, just add another country
+                            testTerr.AddCountry(GetLandflächeFromStringArray(infos, offset + 2));
                             break;
                         }
 
                         // else add a new Territorium containing the new country
-                        terrs.add(new Territorium(GetLandflächeFromStringArray(infos,offset+2),name,new Point(0,0),null,new Armee(null,0)));
+                        terrs.add(new Territorium(GetLandflächeFromStringArray(infos, offset + 2), name, new Point(0, 0), null, new Armee(null, 0)));
                         break;
                     case "capital-of": // sets the capital of a 'Terretorium'
-                        if(infos.length>3) { // if there are enough infos...
+                        if (infos.length > 3) { // if there are enough infos...
                             // than get the name
                             offset = 1;
                             name = infos[1];
@@ -87,16 +87,16 @@ public class IOHelper {
                             }
 
                             // else create a new one
-                            terrs.add(new Territorium(null,name,new Point(Integer.parseInt(infos[2+offset]),Integer.parseInt(infos[3+offset])),null,new Armee(null,0)));
+                            terrs.add(new Territorium(null, name, new Point(Integer.parseInt(infos[2 + offset]), Integer.parseInt(infos[3 + offset])), null, new Armee(null, 0)));
                         }
 
                         break;
                     case "neighbors-of": // connects mulitple 'Terretorium'
                         // Get the name
-                        offset=1;
-                        name=infos[1];
-                        while(1+offset<infos.length&&!infos[1+offset].equals(":")) {
-                            name+=" "+infos[1+offset];
+                        offset = 1;
+                        name = infos[1];
+                        while (1 + offset < infos.length && !infos[1 + offset].equals(":")) {
+                            name += " " + infos[1 + offset];
                             offset++;
                         }
                         offset--;
@@ -106,21 +106,21 @@ public class IOHelper {
                         // Example: "neighbors-of TEST : AHA das - Austria"
                         // if I would split it with the (string) line, I would get: "neighbors-of TEST : AHA das", "Austria"
                         // if I would split it with the (string) substring (which would be "AHA - Austria"), I would get: "AHA das", "Austria" (which is perfect)
-                        String substringing=line;
-                        while(substringing.charAt(0)!=':'){
-                            substringing=substringing.substring(1);
+                        String substringing = line;
+                        while (substringing.charAt(0) != ':') {
+                            substringing = substringing.substring(1);
                         }
 
-                        substringing=substringing.substring(2);
-                        String otherSplited[]=substringing.split(" - ");
-                        testTerr=GetTerritoriumByName(terrs,name);
+                        substringing = substringing.substring(2);
+                        String otherSplited[] = substringing.split(" - ");
+                        testTerr = GetTerritoriumByName(terrs, name);
 
-                        if(testTerr!=null){ // if the main territori exists, than add the territories (and if they don't exist, just create than and add than to terrs and the main Territorium
-                            for (int i=0;i<otherSplited.length;i++){
-                                Territorium neigh=GetTerritoriumByName(terrs,otherSplited[i]);
+                        if (testTerr != null) { // if the main territori exists, than add the territories (and if they don't exist, just create than and add than to terrs and the main Territorium
+                            for (int i = 0; i < otherSplited.length; i++) {
+                                Territorium neigh = GetTerritoriumByName(terrs, otherSplited[i]);
 
-                                if(neigh==null){
-                                    neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
+                                if (neigh == null) {
+                                    neigh = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                     terrs.add(neigh);
                                 }
 
@@ -130,13 +130,13 @@ public class IOHelper {
                             break;
                         }
 
-                        testTerr=new Territorium(null,name,new Point(0,0),null,new Armee(null,0));
+                        testTerr = new Territorium(null, name, new Point(0, 0), null, new Armee(null, 0));
                         terrs.add(testTerr);
-                        for (int i=0;i<otherSplited.length;i++){
-                            Territorium neigh=GetTerritoriumByName(terrs,otherSplited[i]);
+                        for (int i = 0; i < otherSplited.length; i++) {
+                            Territorium neigh = GetTerritoriumByName(terrs, otherSplited[i]);
 
-                            if(neigh==null){
-                                neigh=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
+                            if (neigh == null) {
+                                neigh = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                 terrs.add(neigh);
                             }
 
@@ -145,30 +145,30 @@ public class IOHelper {
 
                         break;
                     case "continent": // creates a continent conatining these 'Terretorium's
-                        offset=1;
-                        boolean exists4=false;
-                        name=infos[1];
-                        while(1+offset<infos.length&&!infos[1+offset].matches("^-?\\d+$")) { // if it isn't a integer
-                            name+=" "+infos[1+offset];
+                        offset = 1;
+                        boolean exists4 = false;
+                        name = infos[1];
+                        while (1 + offset < infos.length && !infos[1 + offset].matches("^-?\\d+$")) { // if it isn't a integer
+                            name += " " + infos[1 + offset];
                             offset++;
                         }
                         offset--;
-                        int value=Integer.parseInt(infos[2+offset]);
-                        substringing=line;
-                        while(substringing.charAt(0)!=':'){
-                            substringing=substringing.substring(1);
+                        int value = Integer.parseInt(infos[2 + offset]);
+                        substringing = line;
+                        while (substringing.charAt(0) != ':') {
+                            substringing = substringing.substring(1);
                         }
 
-                        substringing=substringing.substring(2);
-                        otherSplited=substringing.split(" - ");
-                        Kontinent testCon=GetKontinentByName(toRet,name);
+                        substringing = substringing.substring(2);
+                        otherSplited = substringing.split(" - ");
+                        Kontinent testCon = GetKontinentByName(toRet, name);
 
-                        if(testCon!=null){
+                        if (testCon != null) {
                             for (int i = 0; i < otherSplited.length; i++) {
-                                testTerr=GetTerritoriumByName(terrs,otherSplited[i]);
+                                testTerr = GetTerritoriumByName(terrs, otherSplited[i]);
 
-                                if(testTerr==null){
-                                    testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
+                                if (testTerr == null) {
+                                    testTerr = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                 }
 
                                 testCon.AddTerritory(testTerr);
@@ -177,13 +177,13 @@ public class IOHelper {
                             break;
                         }
 
-                        testCon=new Kontinent(name,value);
+                        testCon = new Kontinent(name, value);
                         toRet.add(testCon);
                         for (int i = 0; i < otherSplited.length; i++) {
-                            testTerr=GetTerritoriumByName(terrs,otherSplited[i]);
+                            testTerr = GetTerritoriumByName(terrs, otherSplited[i]);
 
-                            if(testTerr==null){
-                                testTerr=new Territorium(null,otherSplited[i],new Point(0,0),null,new Armee(null,0));
+                            if (testTerr == null) {
+                                testTerr = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                             }
 
                             testCon.AddTerritory(testTerr);
@@ -194,10 +194,10 @@ public class IOHelper {
                 }
             }
 
-            if(toRet.size()==0&&terrs.size()>0){ // if there are no continents but some Territoriums, than just create a temp continent
-                Kontinent temp=new Kontinent("TEMP",0);
+            if (toRet.size() == 0 && terrs.size() > 0) { // if there are no continents but some Territoriums, than just create a temp continent
+                Kontinent temp = new Kontinent("TEMP", 0);
                 for (Territorium ter :
-                     terrs) {
+                        terrs) {
                     temp.AddTerritory(ter);
                 }
                 toRet.add(temp);
@@ -211,10 +211,10 @@ public class IOHelper {
         return toRet;
     }
 
-    private static Territorium GetTerritoriumByName(List<Territorium> terrs, String name){
+    private static Territorium GetTerritoriumByName(List<Territorium> terrs, String name) {
         for (Territorium t :
-             terrs) {
-            if(t.Name.equals(name)){
+                terrs) {
+            if (t.Name.equals(name)) {
                 return t;
             }
         }
@@ -222,10 +222,10 @@ public class IOHelper {
         return null;
     }
 
-    private static Kontinent GetKontinentByName(List<Kontinent>continents, String name){
+    private static Kontinent GetKontinentByName(List<Kontinent> continents, String name) {
         for (Kontinent c :
                 continents) {
-            if(c.Name.equals(name)){
+            if (c.Name.equals(name)) {
                 return c;
             }
         }
@@ -233,11 +233,11 @@ public class IOHelper {
         return null;
     }
 
-    private static Landfläche GetLandflächeFromStringArray(String[] infos, int offset){
-        List<Point>pointsToAdd=new LinkedList<>();
-        for(int i=offset;i<infos.length;i+=2){
-            if(infos.length>(i+1)){
-                pointsToAdd.add(new Point(Integer.parseInt(infos[i]),Integer.parseInt(infos[i+1])));
+    private static Landfläche GetLandflächeFromStringArray(String[] infos, int offset) {
+        List<Point> pointsToAdd = new LinkedList<>();
+        for (int i = offset; i < infos.length; i += 2) {
+            if (infos.length > (i + 1)) {
+                pointsToAdd.add(new Point(Integer.parseInt(infos[i]), Integer.parseInt(infos[i + 1])));
             }
         }
 
