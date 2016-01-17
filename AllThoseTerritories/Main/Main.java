@@ -4,14 +4,18 @@ import Forms.MainMenuScreen;
 import Forms.SplashScreen;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Main.Main class to initialize everything. This is where it all begins.
  */
 public class Main {
+    // We have to add 29 px to spacing issues with swing...
+    public static final Dimension DEFAULT_FRAME_SIZE = new Dimension(1250, 679);
+
     public static JFrame CurrentFrame;
 
-    public static void SetCurrentFrame(JFrame frame) {
+    public static void setCurrentFrame(JFrame frame) {
         // Set location of new frame relative to last frame, before disposing the latter.
         if (frame != null)
             frame.setLocationRelativeTo(CurrentFrame);
@@ -32,7 +36,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SetCurrentFrame(new SplashScreen("resources/Sprites/AllThoseTerritories.png"));
+        setCurrentFrame(new SplashScreen("resources/Sprites/AllThoseTerritories.png"));
 
         try {
             Thread.sleep(2500);
@@ -40,6 +44,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        SetCurrentFrame(new MainMenuScreen());
+        setCurrentFrame(new MainMenuScreen());
     }
 }

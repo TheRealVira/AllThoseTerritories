@@ -15,11 +15,11 @@ public class Kontinent {
     private int Bonus;
     public String Name;
 
-    public int GetBonus() {
+    public int getBonus() {
         return this.Bonus;
     }
 
-    public void AddTerritory(Territorium territorium) {
+    public void addTerritory(Territorium territorium) {
         if (this.Territories != null && territorium != null) {
             this.Territories.add(territorium);
         }
@@ -47,32 +47,32 @@ public class Kontinent {
         }
     }
 
-    public void Draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
+    public void draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
         if (this.Territories != null) {
             for (Territorium terr :
                     this.Territories) {
-                terr.Draw(graphics, frame, player1, player2);
+                terr.draw(graphics, frame, player1, player2);
             }
         }
     }
 
-    public void DrawConnections(Graphics graphics, Dimension screenDimension) {
+    public void drawConnections(Graphics graphics, Dimension screenDimension) {
         if (this.Territories != null) {
             for (Territorium terr :
                     this.Territories) {
-                terr.DrawConnections(graphics, screenDimension);
+                terr.drawConnections(graphics, screenDimension);
             }
         }
     }
 
-    public boolean AllTerritoriesAreSet() {
+    public boolean allTerritoriesAreSet() {
         if (this.Territories == null) {
             return true;
         }
 
         for (Territorium ter :
                 this.Territories) {
-            if (!ter.IsSet()) {
+            if (!ter.isSet()) {
                 return false;
             }
         }
@@ -80,7 +80,7 @@ public class Kontinent {
         return true;
     }
 
-    public Territorium GetTerritoriumFromPosition(Point point, JFrame frame) {
+    public Territorium getTerritoriumFromPosition(Point point, JFrame frame) {
         if (this.Territories == null) {
             return null;
         }
@@ -95,7 +95,7 @@ public class Kontinent {
         return null;
     }
 
-    public int GetCountOfOwnedTerritories(boolean player1) {
+    public int getCountOfOwnedTerritories(boolean player1) {
         if (this.Territories == null) {
             return 0;
         }
@@ -109,16 +109,16 @@ public class Kontinent {
         return toRet;
     }
 
-    public boolean OwnedBy(boolean player1) {
-        return this.Territories != null && GetCountOfOwnedTerritories(player1) == this.Territories.size();
+    public boolean ownedBy(boolean player1) {
+        return this.Territories != null && getCountOfOwnedTerritories(player1) == this.Territories.size();
     }
 
     @Nullable
-    public Boolean GetTheOwner() {
-        return OwnedBy(true) ? Boolean.TRUE : OwnedBy(false) ? Boolean.FALSE : null;
+    public Boolean getTheOwner() {
+        return ownedBy(true) ? Boolean.TRUE : ownedBy(false) ? Boolean.FALSE : null;
     }
 
-    public Territorium GetFirstNotOwnedTerretorium() {
+    public Territorium getFirstNotOwnedTerretorium() {
         if (this.Territories == null || this.Territories.size() == 0) {
             return null;
         }
@@ -133,7 +133,7 @@ public class Kontinent {
         return null; // Nothing found
     }
 
-    public Territorium GetHeaviestTerritory(boolean player1) {
+    public Territorium getHeaviestTerritory(boolean player1) {
         if (this.Territories == null || this.Territories.size() == 0) {
             return null;
         }

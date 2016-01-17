@@ -4,6 +4,7 @@ import AllThoseTerritories.Armee;
 import AllThoseTerritories.Territorium;
 import Forms.ArmeeTransferScreen;
 import Forms.BattleScreen;
+import Forms.GameScreen;
 
 import java.awt.*;
 import java.util.Random;
@@ -17,29 +18,29 @@ public class Human extends Player {
     }
 
     @Override
-    public String Update(int gameState, Territorium target, Random rand) {
+    public String update(GameScreen.StateOfPlaying gameState, Territorium target, Random rand) {
         switch (gameState) {
-            case 1: // Phase Landerwerb
-                if (!target.IsSet()) {
+            case Expansion: // Phase Landerwerb
+                if (!target.isSet()) {
                     if (this.LastSelected != null) {
-                        this.LastSelected.Set(null, 0);
+                        this.LastSelected.set(null, 0);
                     }
 
-                    target.Set(this.ImPlayer1, 1);
+                    target.set(this.ImPlayer1, 1);
                     this.LastSelected = target;
                     return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "claimed " + target.Name + ".";
                 }
                 break;
-            case 2: // Select Country
+            case Reinforcing: // Select Country
                 MovedThisTurn = false;
                 return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "now has " + this.Verstärkung.Count + " reinforcements.";
-            case 3: // Select Country
+            case SelectFirstTerritory: // Select Country
                 this.LastSelected = target;
                 return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "selected " + target.Name + ".";
-            case 4: // Select Country
-                if (LastSelected != null && LastSelected.ContainsTerritorium(target.Name) || target.Name.equals(LastSelected.Name)) {  // Claim
+            case SelectSecondTerritory: // Select Country
+                if (LastSelected != null && LastSelected.containsTerritorium(target.Name) || target.Name.equals(LastSelected.Name)) {  // Claim
                     if (target == this.LastSelected && target != null && target.Occupation.State == this.ImPlayer1) {
-                        TransferArmee(
+                        transferArmee(
                                 "Set the reinforcement of your backhand or " + target.Name,
                                 "Please select, how many will be in " + target.Name + ":",
                                 target.Occupation,
@@ -48,7 +49,7 @@ public class Human extends Player {
 
                         return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.Name + " and the backhand.";
                     } else if (!MovedThisTurn && target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) { // Transfer
-                        TransferArmee(
+                        transferArmee(
                                 "Set the reinforcement of " + LastSelected.Name + " or " + target.Name,
                                 "Please select, how many should be in " + target.Name + ":",
                                 target.Occupation,
@@ -66,13 +67,13 @@ public class Human extends Player {
                         Territorium myTerritorium = target.Occupation.State == this.ImPlayer1 ? target : this.LastSelected; // Get sure, which ones are the players armees
                         if (myTerritorium.Occupation.Count > 1) {
                             Territorium atackedOne = myTerritorium == target ? this.LastSelected : target;
-                            TransferArmee("Attack " + atackedOne.Name, "How many armies should attack " + atackedOne.Name + "?", attackOfTheTitans, myTerritorium.Occupation, false);
+                            transferArmee("Attack " + atackedOne.Name, "How many armies should attack " + atackedOne.Name + "?", attackOfTheTitans, myTerritorium.Occupation, false);
 
                             Thread atack = new Thread() {
                                 @Override
                                 public void run() {
                                     super.run();
-                                    while (!FinishedTransfering()) {
+                                    while (!finishedTransfering()) {
                                         try {
                                             Thread.sleep(100l); // It was too fast and never got out of the loop, so I had to make it slower...
                                         } catch (InterruptedException e) {
@@ -81,7 +82,7 @@ public class Human extends Player {
                                     } // Wait till finished selecting
 
                                     if (attackOfTheTitans.Count != 0) {
-                                        BattleScreen.Fight(myTerritorium, atackedOne, attackOfTheTitans, atackedOne.Occupation, rand);
+                                        BattleScreen.fight(myTerritorium, atackedOne, attackOfTheTitans, atackedOne.Occupation, rand);
                                     }
                                 }
                             };
@@ -92,7 +93,7 @@ public class Human extends Player {
                             return myTerritorium.Name + " has to less armies and can't fight!";
                         }
                     }
-                } else if (!LastSelected.ContainsTerritorium(target.Name)) {
+                } else if (!LastSelected.containsTerritorium(target.Name)) {
                     return "They aren't neigbors...";
                 }
 

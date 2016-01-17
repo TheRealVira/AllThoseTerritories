@@ -1,5 +1,7 @@
 package Forms;
 
+import Main.Main;
+
 import javax.swing.*;
 
 /**
@@ -9,7 +11,7 @@ public class SplashScreen extends JFrame {
 
     public SplashScreen(String resource) {
         super("AllThoseTerritories");
-        setSize(1250, 679); // We have to add 30 px to spacing issues with swing...
+        setSize(Main.DEFAULT_FRAME_SIZE);
         setResizable(false);
         add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(resource))));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

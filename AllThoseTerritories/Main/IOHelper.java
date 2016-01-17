@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Thomas on 03/01/2016.
  */
 public class IOHelper {
-    public static List<Kontinent> CreatePlayingFieldsFromFile(String file) {
+    public static List<Kontinent> createPlayingFieldsFromFile(String file) {
         // TODO: Add I/O logik and return a new list containing all the continents of the file.
         //return null;
         /*List<Point>points=new LinkedList<Point>();
@@ -58,15 +58,15 @@ public class IOHelper {
                         offset--;
 
                         // Find the Territorium in our temp list of territoriums (terrs)
-                        Territorium testTerr = GetTerritoriumByName(terrs, name);
+                        Territorium testTerr = getTerritoriumByName(terrs, name);
 
                         if (testTerr != null) { // if it does exist, just add another country
-                            testTerr.AddCountry(GetLandflächeFromStringArray(infos, offset + 2));
+                            testTerr.addCountry(getLandflächeFromStringArray(infos, offset + 2));
                             break;
                         }
 
                         // else add a new Territorium containing the new country
-                        terrs.add(new Territorium(GetLandflächeFromStringArray(infos, offset + 2), name, new Point(0, 0), null, new Armee(null, 0)));
+                        terrs.add(new Territorium(getLandflächeFromStringArray(infos, offset + 2), name, new Point(0, 0), null, new Armee(null, 0)));
                         break;
                     case "capital-of": // sets the capital of a 'Terretorium'
                         if (infos.length > 3) { // if there are enough infos...
@@ -80,7 +80,7 @@ public class IOHelper {
                             offset--;
 
                             // find the Territorium in our temp list of territoriums (terrs)
-                            testTerr = GetTerritoriumByName(terrs, name);
+                            testTerr = getTerritoriumByName(terrs, name);
                             if (testTerr != null) { // and if it contains our target, than set the capital of it.
                                 testTerr.Capital = new Point(Integer.parseInt(infos[2 + offset]), Integer.parseInt(infos[3 + offset]));
                                 break;
@@ -113,18 +113,18 @@ public class IOHelper {
 
                         substringing = substringing.substring(2);
                         String otherSplited[] = substringing.split(" - ");
-                        testTerr = GetTerritoriumByName(terrs, name);
+                        testTerr = getTerritoriumByName(terrs, name);
 
                         if (testTerr != null) { // if the main territori exists, than add the territories (and if they don't exist, just create than and add than to terrs and the main Territorium
                             for (int i = 0; i < otherSplited.length; i++) {
-                                Territorium neigh = GetTerritoriumByName(terrs, otherSplited[i]);
+                                Territorium neigh = getTerritoriumByName(terrs, otherSplited[i]);
 
                                 if (neigh == null) {
                                     neigh = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                     terrs.add(neigh);
                                 }
 
-                                neigh.AddNeighour(testTerr);
+                                neigh.addNeighour(testTerr);
                             }
 
                             break;
@@ -133,14 +133,14 @@ public class IOHelper {
                         testTerr = new Territorium(null, name, new Point(0, 0), null, new Armee(null, 0));
                         terrs.add(testTerr);
                         for (int i = 0; i < otherSplited.length; i++) {
-                            Territorium neigh = GetTerritoriumByName(terrs, otherSplited[i]);
+                            Territorium neigh = getTerritoriumByName(terrs, otherSplited[i]);
 
                             if (neigh == null) {
                                 neigh = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                 terrs.add(neigh);
                             }
 
-                            neigh.AddNeighour(testTerr);
+                            neigh.addNeighour(testTerr);
                         }
 
                         break;
@@ -161,17 +161,17 @@ public class IOHelper {
 
                         substringing = substringing.substring(2);
                         otherSplited = substringing.split(" - ");
-                        Kontinent testCon = GetKontinentByName(toRet, name);
+                        Kontinent testCon = getKontinentByName(toRet, name);
 
                         if (testCon != null) {
                             for (int i = 0; i < otherSplited.length; i++) {
-                                testTerr = GetTerritoriumByName(terrs, otherSplited[i]);
+                                testTerr = getTerritoriumByName(terrs, otherSplited[i]);
 
                                 if (testTerr == null) {
                                     testTerr = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                                 }
 
-                                testCon.AddTerritory(testTerr);
+                                testCon.addTerritory(testTerr);
                             }
 
                             break;
@@ -180,13 +180,13 @@ public class IOHelper {
                         testCon = new Kontinent(name, value);
                         toRet.add(testCon);
                         for (int i = 0; i < otherSplited.length; i++) {
-                            testTerr = GetTerritoriumByName(terrs, otherSplited[i]);
+                            testTerr = getTerritoriumByName(terrs, otherSplited[i]);
 
                             if (testTerr == null) {
                                 testTerr = new Territorium(null, otherSplited[i], new Point(0, 0), null, new Armee(null, 0));
                             }
 
-                            testCon.AddTerritory(testTerr);
+                            testCon.addTerritory(testTerr);
                         }
                         break;
                     default: // Something that shouldn't be triggered
@@ -198,7 +198,7 @@ public class IOHelper {
                 Kontinent temp = new Kontinent("TEMP", 0);
                 for (Territorium ter :
                         terrs) {
-                    temp.AddTerritory(ter);
+                    temp.addTerritory(ter);
                 }
                 toRet.add(temp);
             }
@@ -211,7 +211,7 @@ public class IOHelper {
         return toRet;
     }
 
-    private static Territorium GetTerritoriumByName(List<Territorium> terrs, String name) {
+    private static Territorium getTerritoriumByName(List<Territorium> terrs, String name) {
         for (Territorium t :
                 terrs) {
             if (t.Name.equals(name)) {
@@ -222,7 +222,7 @@ public class IOHelper {
         return null;
     }
 
-    private static Kontinent GetKontinentByName(List<Kontinent> continents, String name) {
+    private static Kontinent getKontinentByName(List<Kontinent> continents, String name) {
         for (Kontinent c :
                 continents) {
             if (c.Name.equals(name)) {
@@ -233,7 +233,7 @@ public class IOHelper {
         return null;
     }
 
-    private static Landfläche GetLandflächeFromStringArray(String[] infos, int offset) {
+    private static Landfläche getLandflächeFromStringArray(String[] infos, int offset) {
         List<Point> pointsToAdd = new LinkedList<>();
         for (int i = offset; i < infos.length; i += 2) {
             if (infos.length > (i + 1)) {

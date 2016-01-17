@@ -8,30 +8,38 @@ import java.awt.event.ActionListener;
  * Created by Thomas on 01/01/2016.
  */
 public class WinnerScreen extends JFrame {
-    public WinnerScreen(boolean Winner) {
-        super((Winner ? "Player1" : "Player2") + " Won!!!");
+    public WinnerScreen(boolean isPlayer1Winner) {
+        super((isPlayer1Winner ? "Player1" : "Player2") + " Won!!!");
+        initFrame();
+        initComponents(isPlayer1Winner);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // If someone gets to nervous xD
+    }
+
+    private void initFrame() {
         setLayout(null);
         setSize(500, 275);
         setLocationRelativeTo(Main.Main.CurrentFrame);
         setResizable(false);
+    }
 
+    private void initComponents(boolean isPlayer1Winner) {
         setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/WinnerBg.png"))));
 
         JLabel winnerLabel = new JLabel();
-        winnerLabel.setText(Winner ? "Player1" : "Player2");
+        winnerLabel.setText(isPlayer1Winner ? "Player1" : "Player2");
         winnerLabel.setBounds(getWidth() / 2 - 35, 10, 70, 35);
         add(winnerLabel);
 
-        JButton axidentlyButton = new JButton();
-        axidentlyButton.setText("Exit");
-        axidentlyButton.setBounds(25, getHeight() - 85, 90, 35);
-        axidentlyButton.addActionListener(new ActionListener() {
+        JButton exitButton = new JButton();
+        exitButton.setText("Exit");
+        exitButton.setBounds(25, getHeight() - 85, 90, 35);
+        exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.Main.SetCurrentFrame(null); // Exit the game
+                Main.Main.setCurrentFrame(null); // Exit the game
             }
         });
-        add(axidentlyButton);
+        add(exitButton);
 
         JButton mainMenuButton = new JButton();
         mainMenuButton.setText("Menu");
@@ -39,11 +47,9 @@ public class WinnerScreen extends JFrame {
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.Main.SetCurrentFrame(new MainMenuScreen()); // Exit the game
+                Main.Main.setCurrentFrame(new MainMenuScreen()); // Show Main Menu.
             }
         });
         add(mainMenuButton);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // If someone gets to nervous xD
     }
 }

@@ -17,7 +17,7 @@ import java.util.Random;
 public class BattleScreen {
     private static boolean Working;
 
-    public static void Fight(Territorium terr1, Territorium terr2, Armee armee1, Armee armee2, Random rand) {
+    public static void fight(Territorium terr1, Territorium terr2, Armee armee1, Armee armee2, Random rand) {
         if (terr1 == null || armee1 == null || terr2 == null || armee2 == null || rand == null || Working) {
             return;
         }
@@ -33,6 +33,7 @@ public class BattleScreen {
 
         battleFrame.setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/FightingBackground.png"))));
 
+        //region Set Labels
         JLabel vsLabel = new JLabel();
         vsLabel.setText("VS");
         vsLabel.setBounds(battleFrame.getWidth() / 2 - 10, 10, 20, 35);
@@ -55,7 +56,9 @@ public class BattleScreen {
         JLabel terr2CastOfDice = new JLabel();
         terr2CastOfDice.setBounds(battleFrame.getWidth() - 70, 50, 100, 300);
         battleFrame.add(terr2CastOfDice);
+        //endregion
 
+        //region Init Fight Button.
         JButton fightButton = new JButton();
         fightButton.setText("FIGHT");
         fightButton.setBounds(battleFrame.getWidth() / 2 - 50, battleFrame.getHeight() / 2 - 20, 100, 40);
@@ -63,7 +66,7 @@ public class BattleScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == fightButton) {
-                    BattleLogic(armee1, armee2, rand, terr1CastOfDice, terr2CastOfDice);
+                    battleLogic(armee1, armee2, rand, terr1CastOfDice, terr2CastOfDice);
 
                     terr1Label.setText(terr1.Name + " (" + armee1.Count + ")");
                     terr2Label.setText(terr2.Name + " (" + armee2.Count + ")");
@@ -83,7 +86,9 @@ public class BattleScreen {
         });
 
         battleFrame.add(fightButton);
+        //endregion
 
+        //region Init CancelButton
         JButton cancelButton = new JButton();
         cancelButton.setText("Cancel");
         cancelButton.setBounds(battleFrame.getWidth() / 2 - 50, battleFrame.getHeight() - 75, 100, 35);
@@ -100,7 +105,9 @@ public class BattleScreen {
         });
 
         battleFrame.add(cancelButton);
+        //endregion
 
+        //region Add Window Listener
         battleFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -111,17 +118,18 @@ public class BattleScreen {
                 battleFrame.dispose();
             }
         });
+        //endregion
 
         battleFrame.setVisible(true);
     }
 
-    public static void FastBattle(Armee armee1, Armee armee2, Random rand) {
+    public static void fastBattle(Armee armee1, Armee armee2, Random rand) {
         while (armee1.Count > 0 && armee2.Count > 0) {
-            BattleLogic(armee1, armee2, rand, null, null);
+            battleLogic(armee1, armee2, rand, null, null);
         }
     }
 
-    private static void BattleLogic(Armee armee1, Armee armee2, Random rand, JLabel rolled1, JLabel rolled2) {
+    private static void battleLogic(Armee armee1, Armee armee2, Random rand, JLabel rolled1, JLabel rolled2) {
         int t1 = 0, nextT1 = 0, t2 = 0, nextT2 = 0;
         for (int i = 0; i < (armee1.Count > 3 ? 3 : armee1.Count); i++) {
             int temp = rand.nextInt(6) + 1;

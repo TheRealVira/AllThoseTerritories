@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static Main.Tools.Drawline;
-import static Main.Tools.GetCursorLocation;
+import static Main.Tools.drawLine;
+import static Main.Tools.getCursorLocation;
 
 /**
  * Created by Thomas on 02/01/2016.
@@ -24,7 +24,7 @@ public class Landfläche {
         }
     }
 
-    public void Draw(Graphics graphics, Color color) {
+    public void draw(Graphics graphics, Color color) {
         if (this.Boundary != null) {
             graphics.setColor(color);
             graphics.fillPolygon(this.Boundary);
@@ -38,7 +38,7 @@ public class Landfläche {
         }
     }
 
-    public boolean CursorHover(JFrame frame) {
-        return this.Boundary != null && this.Boundary.contains(GetCursorLocation(frame));
+    public boolean cursorHover(JFrame frame) {
+        return this.Boundary != null && this.Boundary.contains(getCursorLocation(frame));
     }
 }
