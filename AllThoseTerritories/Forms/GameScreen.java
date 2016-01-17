@@ -42,8 +42,8 @@ public class GameScreen extends JFrame{
     0=Exit
     1=Landerwerb
     2=Get Bonus
-    3=Select Terretorium
-    4=Select second Terretorium (and do stuff)
+    3=Select Territory
+    4=Select second Territory (and do stuff)
      */
     private int StatesOfPlaying=1;
 

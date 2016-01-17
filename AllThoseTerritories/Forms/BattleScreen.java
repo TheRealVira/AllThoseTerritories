@@ -24,10 +24,12 @@ public class BattleScreen {
 
         Working=true;
 
-        JFrame battleFrame=new JFrame(terr1.Name+" VS "+terr2.Name);
+        // JDialog instead of JFrame, since the battleFrame is essentially a sub-frame of the calling Frame and should always be on top of it.
+        JDialog battleFrame=new JDialog(Main.Main.CurrentFrame, terr1.Name+" VS "+terr2.Name);
         battleFrame.setLayout(null);
         battleFrame.setSize(500,250);
         battleFrame.setResizable(false);
+        battleFrame.setLocationRelativeTo(Main.Main.CurrentFrame);
 
         battleFrame.setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/FightingBackground.png"))));
 

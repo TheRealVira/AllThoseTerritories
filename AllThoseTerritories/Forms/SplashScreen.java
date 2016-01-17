@@ -13,5 +13,6 @@ public class SplashScreen extends JFrame{
         setResizable(false);
         add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(resource))));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 }

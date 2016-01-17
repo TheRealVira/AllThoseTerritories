@@ -15,15 +15,15 @@ public class ColorChooserButton extends JButton {
 
     public ColorChooserButton(Color current, String title){
         MyColor=current;
-        setForeground(MyColor);
-        setBackground(NegateColor(MyColor));
+        setForeground(NegateColor(MyColor));
+        setBackground(MyColor);
 
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MyColor=JColorChooser.showDialog(null,title,MyColor);
-                setForeground(MyColor);
-                setBackground(NegateColor(MyColor));
+                setForeground(NegateColor(MyColor));
+                setBackground(MyColor);
             }
         });
     }

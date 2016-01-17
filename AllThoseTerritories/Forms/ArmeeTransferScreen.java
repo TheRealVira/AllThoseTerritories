@@ -11,22 +11,25 @@ import java.awt.event.WindowEvent;
 /**
  * Created by Thomas on 05/01/2016.
  */
-public class ArmeeTransferScreen extends JFrame {
+// Extends JDialog instead of JFrame, since the TransferScreen is essentially a sub-frame of the calling Frame and should always be on top of it.
+public class ArmeeTransferScreen extends JDialog {
     private JComboBox ArmeeCount=new JComboBox();
-    private JButton Accept=new JButton(),Cancel=new JButton();
+    private JButton Accept=new JButton();
+    private JButton Cancel=new JButton();
     private JLabel Description=new JLabel();
     private Armee Armee1,Armee2;
     private int MaxCount;
-    private JFrame This=this;
+    private JDialog This=this;
     public boolean Finished;
 
     public ArmeeTransferScreen(String header, String description, Armee armee1, Armee armee2,boolean armee1AsBorder){
-        super(header);
+        super(Main.Main.CurrentFrame);
 
         setSize(500,275);
         setResizable(false);
         setLayout(null);
         setContentPane(new JLabel(new ImageIcon(BattleScreen.class.getClassLoader().getResource("resources/Sprites/TransferBg.png"))));
+        setLocationRelativeTo(Main.Main.CurrentFrame);
 
         MaxCount=armee1.Count+armee2.Count+(armee1AsBorder?1:0);
         for (int i=armee1AsBorder?armee1.Count:1;i<MaxCount;i++){

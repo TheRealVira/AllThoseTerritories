@@ -9,9 +9,13 @@ import javax.swing.*;
  * Main.Main class to initialize everything. This is where it all begins.
  */
 public class Main {
-    private static JFrame CurrentFrame;
+    public static JFrame CurrentFrame;
 
     public static void SetCurrentFrame(JFrame frame){
+        // Set location of new frame relative to last frame, before disposing the latter.
+        if (frame != null)
+            frame.setLocationRelativeTo(CurrentFrame);
+
         if(CurrentFrame!=null) {
             CurrentFrame.setVisible(false);
             CurrentFrame.dispose(); // Clean exit on last frame.
