@@ -13,6 +13,7 @@ import java.util.List;
 
 import static Main.Tools.brightenColor;
 import static Main.Tools.drawLine;
+import static Main.Tools.drawLineWithScreenWrap;
 
 /**
  * Created by Thomas on 02/01/2016.
@@ -53,17 +54,25 @@ public class Territorium {
     }
 
     public void drawConnections(Graphics graphics, Dimension screenDimension) {
-        // draw the connections to other Territories
+        // draw the connections to other Territories, with screen wrap.
         if (this.Neighbours != null && this.Neighbours.size() > 0) {
             for (int i = 0; i < this.Neighbours.size(); i++) {
-                drawLine((Graphics2D) graphics, this.Capital, calculateShortestWay(this.Capital, this.Neighbours.get(i).Capital, screenDimension)/*this.Neighbours.get(i).Capital*/, 2f, Color.WHITE); // may change the stroke width.
+                drawLineWithScreenWrap((Graphics2D) graphics, this.Capital, calculateShortestWay(this.Capital, this.Neighbours.get(i).Capital, screenDimension), screenDimension/*this.Neighbours.get(i).Capital*/, 2f, Color.WHITE); // may change the stroke width.
             }
         }
     }
 
     private Point calculateShortestWay(Point point1, Point point2, Dimension dimensions) {
-        // TODO: Return the shortest path from point1 to point2. (With screen wrap!)
-        return point2;
+        int distanceXWithout = Math.abs(point2.x - point1.x); // Without Screen Wrap
+        int distanceXWith = Math.abs(distanceXWithout - dimensions.width); // With Screen Wrap
+
+        int distanceYWithout = Math.abs(point2.y - point1.y);
+        int distanceYWith = Math.abs(distanceYWithout - dimensions.height);
+
+        return new Point(
+                distanceXWith < distanceXWithout ? point2.x - dimensions.width : point2.x,
+                distanceYWith < distanceYWithout ? point2.y - dimensions.height : point2.y
+        );
     }
 
     public void draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
@@ -148,7 +157,7 @@ public class Territorium {
         for (Territorium ter :
                 this.Neighbours) {
             if (!checked.contains(ter)) {
-                if (ter.Occupation.State != null && ter.Occupation.State != player1 && ter.Occupation.Count < armieCount) { // Fouund enemy
+                if (ter.Occupation.State != null && ter.Occupation.State != player1 && ter.Occupation.Count < armieCount) { // Found enemy
                     return this;
                 } else {
                     checked.add(ter);

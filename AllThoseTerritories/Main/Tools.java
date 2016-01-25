@@ -33,11 +33,37 @@ public class Tools {
     Draws a line.
      */
     public static void drawLine(Graphics2D graphics, Point point1, Point point2, float strokeWidth, Color color) {
-        if (graphics != null && point1 != null && point2 != null && color != null) {
+        if (point1 != null && point2 != null) {
+            SetGraphicsHints(graphics, strokeWidth, color);
+
+            graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
+        }
+    }
+    public static void drawLineWithScreenWrap(Graphics2D graphics, Point point1, Point point2, Dimension dimension, float strokeWidth, Color color) {
+        if (point1 != null && point2 != null) {
+            SetGraphicsHints(graphics, strokeWidth, color);
+
+            if (point2.x >= 0 && point2.y >= 0)
+                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
+            else if (point2.x < 0 && point2.y >= 0) {
+                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
+                graphics.drawLine((int) point1.getX() + dimension.width, (int) point1.getY(), (int) point2.getX() + dimension.width, (int) point2.getY());
+            }
+            else if (point2.x >= 0 && point2.y < 0) {
+                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
+                graphics.drawLine((int) point1.getX(), (int) point1.getY() + dimension.height, (int) point2.getX(), (int) point2.getY() + dimension.height);
+            }
+            else if (point2.x < 0 && point2.y < 0) {
+                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
+                graphics.drawLine((int) point1.getX() + dimension.width, (int) point1.getY() + dimension.height, (int) point2.getX() + dimension.width, (int) point2.getY() + dimension.height);
+            }
+        }
+    }
+    private static void SetGraphicsHints(Graphics2D graphics, float strokeWidth, Color color) {
+        if (graphics != null && color != null) {
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setStroke(new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             graphics.setColor(color);
-            graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
         }
     }
 
