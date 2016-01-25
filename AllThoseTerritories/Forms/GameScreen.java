@@ -81,8 +81,8 @@ public class GameScreen extends JFrame {
         this.map.setVisible(true);
         this.map.setLayout(null);
 
-        this.consoleLabel.setBounds(100, this.map.getHeight() - 75, this.map.getWidth() - 200, 35);
-        this.suggestionLabel.setBounds(100, this.map.getHeight() - 105, this.map.getWidth() - 200, 35);
+        this.consoleLabel.setBounds(25, this.map.getHeight() - 75, this.map.getWidth() - 200, 35);
+        this.suggestionLabel.setBounds(25, this.map.getHeight() - 105, this.map.getWidth() - 200, 35);
 
         this.nextRoundButton.setBounds(this.map.getWidth() - 185, getHeight() - 85, 150, 35);
         this.nextRoundButton.setText("Next Round");
@@ -92,8 +92,8 @@ public class GameScreen extends JFrame {
         this.cancelSelectionButton.setText("Cancel selection");
         this.cancelSelectionButton.setVisible(false);
 
-        this.turnOwnerLabel.setBounds(getWidth() / 2 - 35, 10, 150, 35);
-        this.reinforcementLabel.setBounds(getWidth() / 2 - 35, 45, 150, 35);
+        this.turnOwnerLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 75, 150, 35);
+        this.reinforcementLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 105, 150, 35);
 
         this.backgroundLabel = new JLabel();
         this.backgroundLabel.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/Sprites/GameBackground.png")));
@@ -314,7 +314,7 @@ public class GameScreen extends JFrame {
                     player2.LastSelected = null;
                     currentState = StateOfPlaying.SelectFirstTerritory;
                     cancelSelectionButton.setVisible(false);
-                    consoleLabel.setText("<html><span style=\"color: #000000; backgroundLabel-color: #FFFFFF\">Canceled moves</span></html>");
+                    consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Canceled moves" + "</span></html>");
                 }
             }
         });
@@ -448,9 +448,9 @@ public class GameScreen extends JFrame {
         }
 
         if (isPlayer1Turn) {
-            consoleLabel.setText("<html><span style=\"color: #000000; backgroundLabel-color: #FFFFFF\">" + player1.update(currentState, nextTarget, rand) + "</span></html>");
+            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player1.update(currentState, nextTarget, rand) + "</span></html>");
         } else {
-            consoleLabel.setText("<html><span style=\"color: #000000; backgroundLabel-color: #FFFFFF\">" + player2.update(currentState, nextTarget, rand) + "</span></html>");
+            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player2.update(currentState, nextTarget, rand) + "</span></html>");
         }
 
         NewRoundStarted = false;
