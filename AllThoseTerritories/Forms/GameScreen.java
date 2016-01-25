@@ -213,14 +213,14 @@ public class GameScreen extends JFrame {
                     }
 
                     if (testTerr != null) {
-                        String bevor = consoleLabel.getText();
+                        String before = consoleLabel.getText();
                         if (isPlayer1Turn) {
-                            consoleLabel.setText("<html><span style=\"color: #000000; backgroundLabel-color: #FFFFFF\">" + player1.update(currentState, testTerr, rand) + "</span></html>");
+                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player1.update(currentState, testTerr, rand) + "</span></html>");
                         } else {
-                            consoleLabel.setText("<html><span style=\"color: #000000; backgroundLabel-color: #FFFFFF\">" + player2.update(currentState, testTerr, rand) + "</span></html>");
+                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player2.update(currentState, testTerr, rand) + "</span></html>");
                         }
 
-                        if (!bevor.equals(consoleLabel.getText())) {
+                        if (!before.equals(consoleLabel.getText())) {
                             if (currentState == StateOfPlaying.Expansion) {
                                 checkIfAllcontinentsAreSet();
 

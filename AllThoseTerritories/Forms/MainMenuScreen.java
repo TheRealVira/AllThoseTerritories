@@ -20,7 +20,7 @@ import static Main.IOHelper.createPlayingFieldsFromFile;
  */
 public class MainMenuScreen extends JFrame {
     private JButton startButton = new JButton("Start Game");
-    private JButton exitButton = new JButton("exitButton");
+    private JButton exitButton = new JButton("Exit");
     private JComboBox mapList = new JComboBox();
     private JLabel mapSelectedText = new JLabel();
     private ColorChooserButton player1ColorButton = new ColorChooserButton(new Color(0, 200, 0), "Choose a color for Player1");
