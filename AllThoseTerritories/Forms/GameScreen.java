@@ -360,7 +360,7 @@ public class GameScreen extends JFrame {
 
         int toRet = 0;
         for (Kontinent con : this.continents) {
-            toRet += (con.ownedBy(player1) ? con.getBonus() : 0) + con.getCountOfOwnedTerritories(player1) / 3 + (con.ownedBy(player1) ? con.getBonus() : 0);
+            toRet += (con.ownedBy(player1) ? con.getBonus() : 0) + con.getCountOfOwnedTerritories(player1) / 3;
         }
 
         return toRet < 3 ? 3 : toRet;
