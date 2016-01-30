@@ -5,7 +5,6 @@ import AllThoseTerritories.Territorium;
 import Forms.BattleScreen;
 import Forms.GameScreen;
 
-import java.awt.*;
 import java.util.Random;
 
 /**

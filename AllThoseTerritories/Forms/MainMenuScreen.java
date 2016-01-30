@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
 import java.util.List;
 
 import static Main.IOHelper.createPlayingFieldsFromFile;
@@ -75,6 +74,7 @@ public class MainMenuScreen extends JFrame {
         add(isPlayer1ABot);
         add(isPlayer2ABot);
     }
+
     private void loadMapNames() {
         File[] files = new File(getClass().getClassLoader().getResource("").getFile() + "resources/Maps/").listFiles();
         for (File f : files) {

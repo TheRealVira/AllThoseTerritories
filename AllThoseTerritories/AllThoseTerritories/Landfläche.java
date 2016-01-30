@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static Main.Tools.drawLine;
 import static Main.Tools.getCursorLocation;
 
 /**

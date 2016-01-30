@@ -2,11 +2,9 @@ package AllThoseTerritories.Player;
 
 import AllThoseTerritories.Armee;
 import AllThoseTerritories.Territorium;
-import Forms.ArmeeTransferScreen;
 import Forms.BattleScreen;
 import Forms.GameScreen;
 
-import java.awt.*;
 import java.util.Random;
 
 /**

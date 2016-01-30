@@ -39,7 +39,7 @@ public class GameScreen extends JFrame {
     private Timer pcTimer, drawTimer;
     private JLabel backgroundLabel;
 
-    private final static int UI_OFFSET=105;
+    private final static int UI_OFFSET = 105;
 
     /*
     0=Exit
@@ -51,6 +51,7 @@ public class GameScreen extends JFrame {
     public enum StateOfPlaying {
         Exit, Expansion, Reinforcing, SelectFirstTerritory, SelectSecondTerritory;
     }
+
     private StateOfPlaying currentState = StateOfPlaying.Expansion;
 
     public StateOfPlaying GetGameState() {
@@ -72,7 +73,7 @@ public class GameScreen extends JFrame {
 
     private void initFrame() {
         setLayout(null);
-        setSize(new Dimension(Main.DEFAULT_FRAME_SIZE.width,Main.DEFAULT_FRAME_SIZE.height+UI_OFFSET));
+        setSize(new Dimension(Main.DEFAULT_FRAME_SIZE.width, Main.DEFAULT_FRAME_SIZE.height + UI_OFFSET));
         setResizable(false);
     }
 
@@ -137,7 +138,7 @@ public class GameScreen extends JFrame {
                 //endregion
 
                 g.setColor(Color.black);
-                g.drawRect(0,0,getWidth(),getHeight());
+                g.drawRect(0, 0, getWidth(), getHeight());
 
                 //region Update Buttons and Labels
                 // Set visibility of nextRoundButton and update it.
@@ -155,20 +156,20 @@ public class GameScreen extends JFrame {
                 // Set new Text of turnOwnerLabel and update it.
                 String turnOwnerText =
                         "<html>" +
-                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
-                                (isPlayer1Turn ? "1st Players turn" : "2nd Players turn") +  "[___]" +
-                            "</span>" +
-                        "</html>";
+                                "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
+                                (isPlayer1Turn ? "1st Players turn" : "2nd Players turn") + "[___]" +
+                                "</span>" +
+                                "</html>";
                 turnOwnerLabel.setText(turnOwnerText);
                 turnOwnerLabel.updateUI();
 
                 // Set new Text of reinforcementText and update it.
                 String reinforcmentText =
                         "<html>" +
-                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
+                                "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
                                 "Reinforement: " + (isPlayer1Turn ? player1.verstärkung.count : player2.verstärkung.count) +
-                            "</span>" +
-                        "</html>";
+                                "</span>" +
+                                "</html>";
                 reinforcementLabel.setText(reinforcmentText);
                 reinforcementLabel.updateUI();
 

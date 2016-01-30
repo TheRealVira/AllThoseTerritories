@@ -47,7 +47,7 @@ public class IOHelper {
                 String infos[] = line.split("\\s+"); // splits the line at every splace
 
                 switch (infos[0]) {
-                    case "patch-of":// adds a country to a 'Terretorium'
+                    case "patch-of":// adds a country to a 'Territorium'
                         // Get the name of the current Territorium
                         int offset = 1;
                         String name = infos[1];
@@ -68,7 +68,7 @@ public class IOHelper {
                         // else add a new Territorium containing the new country
                         terrs.add(new Territorium(getLandflächeFromStringArray(infos, offset + 2), name, new Point(0, 0), null, new Armee(null, 0)));
                         break;
-                    case "capital-of": // sets the capital of a 'Terretorium'
+                    case "capital-of": // sets the capital of a 'Territorium'
                         if (infos.length > 3) { // if there are enough infos...
                             // than get the name
                             offset = 1;
@@ -91,7 +91,7 @@ public class IOHelper {
                         }
 
                         break;
-                    case "neighbors-of": // connects mulitple 'Terretorium'
+                    case "neighbors-of": // connects mulitple 'Territorium'
                         // Get the name
                         offset = 1;
                         name = infos[1];
@@ -115,7 +115,7 @@ public class IOHelper {
                         String otherSplited[] = substringing.split(" - ");
                         testTerr = getTerritoriumByName(terrs, name);
 
-                        if (testTerr != null) { // if the main territori exists, than add the territories (and if they don't exist, just create than and add than to terrs and the main Territorium
+                        if (testTerr != null) { // if the main territory exists, than add the territories (and if they don't exist, just create than and add than to terrs and the main Territory
                             for (int i = 0; i < otherSplited.length; i++) {
                                 Territorium neigh = getTerritoriumByName(terrs, otherSplited[i]);
 
@@ -144,7 +144,7 @@ public class IOHelper {
                         }
 
                         break;
-                    case "continent": // creates a continent conatining these 'Terretorium's
+                    case "continent": // creates a continent containing these Territories
                         offset = 1;
                         boolean exists4 = false;
                         name = infos[1];

@@ -1,18 +1,13 @@
 package AllThoseTerritories;
 
-import AllThoseTerritories.Armee;
-import AllThoseTerritories.Landfläche;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import static Main.Tools.brightenColor;
-import static Main.Tools.drawLine;
 import static Main.Tools.drawLineWithScreenWrap;
 
 /**
