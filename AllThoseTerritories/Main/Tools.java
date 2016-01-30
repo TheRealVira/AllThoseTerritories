@@ -41,22 +41,18 @@ public class Tools {
     }
     public static void drawLineWithScreenWrap(Graphics2D graphics, Point point1, Point point2, Dimension dimension, float strokeWidth, Color color) {
         if (point1 != null && point2 != null) {
-            SetGraphicsHints(graphics, strokeWidth, color);
 
-            if (point2.x >= 0 && point2.y >= 0)
-                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
-            else if (point2.x < 0 && point2.y >= 0) {
-                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
-                graphics.drawLine((int) point1.getX() + dimension.width, (int) point1.getY(), (int) point2.getX() + dimension.width, (int) point2.getY());
-            }
-            else if (point2.x >= 0 && point2.y < 0) {
-                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
-                graphics.drawLine((int) point1.getX(), (int) point1.getY() + dimension.height, (int) point2.getX(), (int) point2.getY() + dimension.height);
-            }
-            else if (point2.x < 0 && point2.y < 0) {
-                graphics.drawLine((int) point1.getX(), (int) point1.getY(), (int) point2.getX(), (int) point2.getY());
-                graphics.drawLine((int) point1.getX() + dimension.width, (int) point1.getY() + dimension.height, (int) point2.getX() + dimension.width, (int) point2.getY() + dimension.height);
-            }
+            Point calculatedPoint = new Point(                                                          // Calculate a screenwraped point (if necessary):
+                    (int)(Math.abs(point1.getX()-point2.getX())>=(dimension.getWidth()/2)?              // if the difference of distance of the x coordinates is greater than the half dimension width
+                            (point1.getX()<point2.getX())?(point2.getX()+dimension.getWidth()):         // and if the second point is greater than the first -> than wrap around to the right side
+                            (dimension.getWidth()/2-point2.getX()):point2.getX()),                      // or wrap around the left side (if p1.x is greater than p2.x) or just take the normal x coordinate of the second point.
+
+                    (int)(Math.abs(point1.getY()-point2.getY())>=(dimension.getHeight()/2)?             // Do the same as above but instead checking the x coordinates and the width,
+                            (point1.getY()<point2.getY())?(point2.getY()+dimension.getHeight()):        // we are checking the y coordinates and the height.
+                            (dimension.getHeight()/2-point2.getY()):point2.getY())
+            );
+
+            drawLine(graphics,point1,calculatedPoint,strokeWidth,color);
         }
     }
     private static void SetGraphicsHints(Graphics2D graphics, float strokeWidth, Color color) {
