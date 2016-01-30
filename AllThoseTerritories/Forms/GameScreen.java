@@ -130,7 +130,7 @@ public class GameScreen extends JFrame {
 
                     for (Kontinent c : continents) {
                         if (c != null) {
-                            c.draw(g, This, player1.Color, player2.Color);
+                            c.draw(g, This, player1.color, player2.color);
                         }
                     }
                 }
@@ -141,7 +141,7 @@ public class GameScreen extends JFrame {
 
                 //region Update Buttons and Labels
                 // Set visibility of nextRoundButton and update it.
-                if (isPlayer1Turn ? player1.Verstärkung.Count == 0 : player2.Verstärkung.Count == 0) {
+                if (isPlayer1Turn ? player1.verstärkung.count == 0 : player2.verstärkung.count == 0) {
                     if ((isPlayer1Turn ? player1.getClass() != Computer.class : player2.getClass() != Computer.class) && currentState != StateOfPlaying.Expansion) {
                         nextRoundButton.setVisible(true);
                         nextRoundButton.updateUI();
@@ -155,7 +155,7 @@ public class GameScreen extends JFrame {
                 // Set new Text of turnOwnerLabel and update it.
                 String turnOwnerText =
                         "<html>" +
-                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" +
+                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
                                 (isPlayer1Turn ? "1st Players turn" : "2nd Players turn") +  "[___]" +
                             "</span>" +
                         "</html>";
@@ -165,8 +165,8 @@ public class GameScreen extends JFrame {
                 // Set new Text of reinforcementText and update it.
                 String reinforcmentText =
                         "<html>" +
-                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" +
-                                "Reinforement: " + (isPlayer1Turn ? player1.Verstärkung.Count : player2.Verstärkung.Count) +
+                            "<span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" +
+                                "Reinforement: " + (isPlayer1Turn ? player1.verstärkung.count : player2.verstärkung.count) +
                             "</span>" +
                         "</html>";
                 reinforcementLabel.setText(reinforcmentText);
@@ -178,15 +178,15 @@ public class GameScreen extends JFrame {
                 //region Set Suggestions
                 Territorium testTerr = getTerritoriumFromPosition(getCursorLocation(This));
                 if (testTerr != null) {
-                    if (testTerr.Occupation.State == null) {
-                        suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Claim " + testTerr.Name + "</span></html>");
+                    if (testTerr.occupation.state == null) {
+                        suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + "Claim " + testTerr.name + "</span></html>");
                     } else if (currentState == StateOfPlaying.SelectFirstTerritory) {
-                        suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Select " + testTerr.Name + "</span></html>");
+                        suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + "Select " + testTerr.name + "</span></html>");
                     } else if (currentState == StateOfPlaying.SelectSecondTerritory) {
-                        if (testTerr.Occupation.State == isPlayer1Turn) {
-                            suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Move some reinformance to " + testTerr.Name + "</span></html>");
+                        if (testTerr.occupation.state == isPlayer1Turn) {
+                            suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + "Move some reinformance to " + testTerr.name + "</span></html>");
                         } else {
-                            suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Attack " + testTerr.Name + "</span></html>");
+                            suggestionLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + "Attack " + testTerr.name + "</span></html>");
                         }
                     }
                 } else {
@@ -220,9 +220,9 @@ public class GameScreen extends JFrame {
                     if (testTerr != null) {
                         String before = consoleLabel.getText();
                         if (isPlayer1Turn) {
-                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player1.update(currentState, testTerr, rand) + "</span></html>");
+                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + player1.update(currentState, testTerr, rand) + "</span></html>");
                         } else {
-                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player2.update(currentState, testTerr, rand) + "</span></html>");
+                            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + player2.update(currentState, testTerr, rand) + "</span></html>");
                         }
 
                         if (!before.equals(consoleLabel.getText())) {
@@ -315,11 +315,11 @@ public class GameScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == cancelSelectionButton) {
-                    player1.LastSelected = null;
-                    player2.LastSelected = null;
+                    player1.lastSelected = null;
+                    player2.lastSelected = null;
                     currentState = StateOfPlaying.SelectFirstTerritory;
                     cancelSelectionButton.setVisible(false);
-                    consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + "Canceled moves" + "</span></html>");
+                    consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + "Canceled moves" + "</span></html>");
                 }
             }
         });
@@ -406,27 +406,27 @@ public class GameScreen extends JFrame {
         }
 
         if (NewRoundStarted) {
-            player1.MovedThisTurn = false;
-            player2.MovedThisTurn = false;
+            player1.movedThisTurn = false;
+            player2.movedThisTurn = false;
         }
 
-        if ((this.currentState == StateOfPlaying.SelectFirstTerritory || this.currentState == StateOfPlaying.SelectSecondTerritory) && (this.isPlayer1Turn ? this.player1.Verstärkung.Count > 0 : this.player2.Verstärkung.Count > 0)) {
+        if ((this.currentState == StateOfPlaying.SelectFirstTerritory || this.currentState == StateOfPlaying.SelectSecondTerritory) && (this.isPlayer1Turn ? this.player1.verstärkung.count > 0 : this.player2.verstärkung.count > 0)) {
             nextTarget = getHeaviestTerritory();
         } else if (this.currentState == StateOfPlaying.SelectFirstTerritory) {
             nextTarget = getHeaviestTerritory();
         } else if (this.currentState == StateOfPlaying.SelectSecondTerritory) {
-            if (isPlayer1Turn && player1.LastSelected != null && player1.LastSelected.Neighbours.size() != 0) {
+            if (isPlayer1Turn && player1.lastSelected != null && player1.lastSelected.neighbours.size() != 0) {
                 for (Territorium neighb :
-                        player1.LastSelected.Neighbours) {
-                    if (neighb.Occupation.State != true && neighb.Occupation.Count < player1.LastSelected.Occupation.Count) {
+                        player1.lastSelected.neighbours) {
+                    if (neighb.occupation.state != true && neighb.occupation.count < player1.lastSelected.occupation.count) {
                         nextTarget = neighb;
                         break;
                     }
                 }
-            } else if (!isPlayer1Turn && player2.LastSelected != null && player2.LastSelected.Neighbours.size() != 0) {
+            } else if (!isPlayer1Turn && player2.lastSelected != null && player2.lastSelected.neighbours.size() != 0) {
                 for (Territorium neighb :
-                        player2.LastSelected.Neighbours) {
-                    if (neighb.Occupation.State != false && neighb.Occupation.Count < player2.LastSelected.Occupation.Count) {
+                        player2.lastSelected.neighbours) {
+                    if (neighb.occupation.state != false && neighb.occupation.count < player2.lastSelected.occupation.count) {
                         nextTarget = neighb;
                         break;
                     }
@@ -437,25 +437,25 @@ public class GameScreen extends JFrame {
                 // We now have to move our "big group" to another country (which should have enemies as neighbors)
                 // And bet we don't get into an endless loop 0-0
 
-                if (isPlayer1Turn && player1.LastSelected != null && player1.LastSelected.Neighbours.size() != 0 && player1.LastSelected.Occupation.Count > 1) {
-                    //nextTarget=player1.LastSelected.Neighbours.get(0);
-                    nextTarget = player1.LastSelected.getNextStepToEnemie(true, player1.LastSelected.Occupation.Count);
-                } else if (!isPlayer1Turn && player2.LastSelected != null && player2.LastSelected.Neighbours.size() != 0 && player2.LastSelected.Occupation.Count > 1) {
-                    //nextTarget=player2.LastSelected.Neighbours.get(0);
-                    nextTarget = player2.LastSelected.getNextStepToEnemie(false, player2.LastSelected.Occupation.Count);
+                if (isPlayer1Turn && player1.lastSelected != null && player1.lastSelected.neighbours.size() != 0 && player1.lastSelected.occupation.count > 1) {
+                    //nextTarget=player1.lastSelected.neighbours.get(0);
+                    nextTarget = player1.lastSelected.getNextStepToEnemie(true, player1.lastSelected.occupation.count);
+                } else if (!isPlayer1Turn && player2.lastSelected != null && player2.lastSelected.neighbours.size() != 0 && player2.lastSelected.occupation.count > 1) {
+                    //nextTarget=player2.lastSelected.neighbours.get(0);
+                    nextTarget = player2.lastSelected.getNextStepToEnemie(false, player2.lastSelected.occupation.count);
                 }
             }
         }
 
-        if (nextTarget == null || (isPlayer1Turn ? player1.MovedThisTurn : player2.MovedThisTurn)) {
+        if (nextTarget == null || (isPlayer1Turn ? player1.movedThisTurn : player2.movedThisTurn)) {
             nextRoundButton();
             return;
         }
 
         if (isPlayer1Turn) {
-            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player1.update(currentState, nextTarget, rand) + "</span></html>");
+            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + player1.update(currentState, nextTarget, rand) + "</span></html>");
         } else {
-            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.Color : player2.Color) + ";\">" + player2.update(currentState, nextTarget, rand) + "</span></html>");
+            consoleLabel.setText("<html><span style=\"color: " + hexColorCode(isPlayer1Turn ? player1.color : player2.color) + ";\">" + player2.update(currentState, nextTarget, rand) + "</span></html>");
         }
 
         NewRoundStarted = false;
@@ -497,7 +497,7 @@ public class GameScreen extends JFrame {
         for (Kontinent kon : this.continents) {
             Territorium testTerr = kon.getHeaviestTerritory(isPlayer1Turn);
             if (testTerr != null) {
-                toRet = (toRet == null || toRet.Occupation.Count < testTerr.Occupation.Count) ? testTerr : toRet;
+                toRet = (toRet == null || toRet.occupation.count < testTerr.occupation.count) ? testTerr : toRet;
             }
         }
 
@@ -507,7 +507,7 @@ public class GameScreen extends JFrame {
     private Territorium getFirstNotOwnedTerretorium() {
         for (Kontinent kon :
                 this.continents) {
-            Territorium toRet = kon.getFirstNotOwnedTerretorium();
+            Territorium toRet = kon.getFirstNotOwnedTerritorium();
             if (toRet != null) {
                 return toRet;
             }
@@ -531,8 +531,8 @@ public class GameScreen extends JFrame {
 
         cancelSelectionButton.setVisible(false);
 
-        player1.LastSelected = null;
-        player2.LastSelected = null;
+        player1.lastSelected = null;
+        player2.lastSelected = null;
 
         if (currentState == StateOfPlaying.Reinforcing) {
             if (isPlayer1Turn) {

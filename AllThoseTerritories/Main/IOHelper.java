@@ -82,7 +82,7 @@ public class IOHelper {
                             // find the Territorium in our temp list of territoriums (terrs)
                             testTerr = getTerritoriumByName(terrs, name);
                             if (testTerr != null) { // and if it contains our target, than set the capital of it.
-                                testTerr.Capital = new Point(Integer.parseInt(infos[2 + offset]), Integer.parseInt(infos[3 + offset]));
+                                testTerr.capital = new Point(Integer.parseInt(infos[2 + offset]), Integer.parseInt(infos[3 + offset]));
                                 break;
                             }
 
@@ -214,7 +214,7 @@ public class IOHelper {
     private static Territorium getTerritoriumByName(List<Territorium> terrs, String name) {
         for (Territorium t :
                 terrs) {
-            if (t.Name.equals(name)) {
+            if (t.name.equals(name)) {
                 return t;
             }
         }
@@ -225,7 +225,7 @@ public class IOHelper {
     private static Kontinent getKontinentByName(List<Kontinent> continents, String name) {
         for (Kontinent c :
                 continents) {
-            if (c.Name.equals(name)) {
+            if (c.name.equals(name)) {
                 return c;
             }
         }

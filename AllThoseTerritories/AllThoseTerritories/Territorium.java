@@ -19,45 +19,45 @@ import static Main.Tools.drawLineWithScreenWrap;
  * Created by Thomas on 02/01/2016.
  */
 public class Territorium {
-    private List<Landfläche> Countries;
-    public String Name;
-    public Point Capital;
-    public List<Territorium> Neighbours;
-    public Armee Occupation;
+    private List<Landfläche> countries;
+    public String name;
+    public Point capital;
+    public List<Territorium> neighbours;
+    public Armee occupation;
 
     public Territorium(Landfläche country, String name, Point capital, List<Territorium> neighbours, Armee occupation) {
-        this.Countries = new LinkedList<>();
+        this.countries = new LinkedList<>();
         if (country != null) {
-            this.Countries.add(country);
+            this.countries.add(country);
         }
-        this.Name = name;
-        this.Capital = capital;
+        this.name = name;
+        this.capital = capital;
         if (neighbours != null) {
-            this.Neighbours = neighbours;
+            this.neighbours = neighbours;
         } else {
-            this.Neighbours = new LinkedList<>();
+            this.neighbours = new LinkedList<>();
         }
-        this.Occupation = occupation;
+        this.occupation = occupation;
     }
 
     public void addCountry(Landfläche toAdd) {
-        if (this.Countries != null && toAdd != null) {
-            this.Countries.add(toAdd);
+        if (this.countries != null && toAdd != null) {
+            this.countries.add(toAdd);
         }
     }
 
     public void addNeighour(Territorium terr) {
-        if (this.Neighbours != null && !this.Neighbours.contains(terr)) {
-            this.Neighbours.add(terr);
+        if (this.neighbours != null && !this.neighbours.contains(terr)) {
+            this.neighbours.add(terr);
             terr.addNeighour(this);
         }
     }
 
     public void drawConnections(Graphics graphics, Dimension screenDimension) {
         // draw the connections to other Territories, with screen wrap.
-        if (this.Neighbours != null && this.Neighbours.size() > 0) {
-            for (int i = 0; i < this.Neighbours.size(); i++) {
-                drawLineWithScreenWrap((Graphics2D) graphics, this.Capital, calculateShortestWay(this.Capital, this.Neighbours.get(i).Capital, screenDimension), screenDimension/*this.Neighbours.get(i).Capital*/, 2f, Color.WHITE); // may change the stroke width.
+        if (this.neighbours != null && this.neighbours.size() > 0) {
+            for (int i = 0; i < this.neighbours.size(); i++) {
+                drawLineWithScreenWrap((Graphics2D) graphics, this.capital, calculateShortestWay(this.capital, this.neighbours.get(i).capital, screenDimension), screenDimension/*this.neighbours.get(i).capital*/, 2f, Color.WHITE); // may change the stroke width.
             }
         }
     }
@@ -77,10 +77,10 @@ public class Territorium {
 
     public void draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
         // draw all countries above the connections.
-        if (Countries != null) {
+        if (countries != null) {
             boolean hover = false;
             for (Landfläche c :
-                    this.Countries) {
+                    this.countries) {
                 if (c.cursorHover(frame)) {
                     hover = true;
                     break;
@@ -88,44 +88,44 @@ public class Territorium {
             }
 
             for (Landfläche c :
-                    this.Countries) {
+                    this.countries) {
                 c.draw(graphics, hover ? // That '?' statement will determine the color of the country
-                        (this.Occupation.State == null ?
+                        (this.occupation.state == null ?
                                 brightenColor(Color.LIGHT_GRAY, 0.25) :
-                                this.Occupation.State ?
+                                this.occupation.state ?
                                         brightenColor(player1, 0.25) :
                                         brightenColor(player2, 0.25)) :
-                        (this.Occupation.State == null ?
+                        (this.occupation.state == null ?
                                 Color.LIGHT_GRAY :
-                                this.Occupation.State ?
+                                this.occupation.state ?
                                         player1 :
                                         player2));
             }
         }
 
-        if (this.Occupation != null) {
-            AttributedString text = new AttributedString(this.Occupation.Count + "");
-            text.addAttribute(TextAttribute.BACKGROUND, Color.WHITE, 0, (this.Occupation.Count + "").length());
-            graphics.drawString(text.getIterator(), this.Capital.x, this.Capital.y);
+        if (this.occupation != null) {
+            AttributedString text = new AttributedString(this.occupation.count + "");
+            text.addAttribute(TextAttribute.BACKGROUND, Color.WHITE, 0, (this.occupation.count + "").length());
+            graphics.drawString(text.getIterator(), this.capital.x, this.capital.y);
         }
     }
 
     public boolean isSet() {
-        return this.Occupation.State != null;
+        return this.occupation.state != null;
     }
 
     public void set(Boolean state, int membercount) {
-        this.Occupation.State = state;
-        this.Occupation.Count = membercount;
+        this.occupation.state = state;
+        this.occupation.count = membercount;
     }
 
     public boolean ContainsPoint(Point point, JFrame frame) {
-        if (this.Countries == null) {
+        if (this.countries == null) {
             return false;
         }
 
         for (Landfläche lf :
-                this.Countries) {
+                this.countries) {
             if (lf.cursorHover(frame)) {
                 return true;
             }
@@ -136,8 +136,8 @@ public class Territorium {
 
     public boolean containsTerritorium(String name) {
         for (Territorium ter :
-                this.Neighbours) {
-            if (ter.Name.equals(name)) {
+                this.neighbours) {
+            if (ter.name.equals(name)) {
                 return true;
             }
         }
@@ -155,9 +155,9 @@ public class Territorium {
         }
 
         for (Territorium ter :
-                this.Neighbours) {
+                this.neighbours) {
             if (!checked.contains(ter)) {
-                if (ter.Occupation.State != null && ter.Occupation.State != player1 && ter.Occupation.Count < armieCount) { // Found enemy
+                if (ter.occupation.state != null && ter.occupation.state != player1 && ter.occupation.count < armieCount) { // Found enemy
                     return this;
                 } else {
                     checked.add(ter);

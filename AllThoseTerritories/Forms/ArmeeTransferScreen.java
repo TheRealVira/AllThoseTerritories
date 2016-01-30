@@ -42,8 +42,8 @@ public class ArmeeTransferScreen extends JDialog {
     }
 
     public void initComponents(String description, boolean army1AsBorder) {
-        maxCount = army1.Count + army2.Count + (army1AsBorder ? 1 : 0);
-        for (int i = army1AsBorder ? army1.Count : 1; i < maxCount; i++) {
+        maxCount = army1.count + army2.count + (army1AsBorder ? 1 : 0);
+        for (int i = army1AsBorder ? army1.count : 1; i < maxCount; i++) {
             armyCountBox.addItem(i);
         }
 
@@ -69,8 +69,8 @@ public class ArmeeTransferScreen extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == acceptButton) {
-                    army1.Count = (int) armyCountBox.getSelectedItem();
-                    army2.Count = maxCount - army1.Count - (army1AsBorder ? 1 : 0);
+                    army1.count = (int) armyCountBox.getSelectedItem();
+                    army2.count = maxCount - army1.count - (army1AsBorder ? 1 : 0);
                     This.dispatchEvent(new WindowEvent(This, WindowEvent.WINDOW_CLOSING));
                 }
             }

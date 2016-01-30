@@ -25,7 +25,7 @@ public class BattleScreen {
         Working = true;
 
         // JDialog instead of JFrame, since the battleFrame is essentially a sub-frame of the calling Frame and should always be on top of it.
-        JDialog battleFrame = new JDialog(Main.Main.CurrentFrame, terr1.Name + " VS " + terr2.Name);
+        JDialog battleFrame = new JDialog(Main.Main.CurrentFrame, terr1.name + " VS " + terr2.name);
         battleFrame.setLayout(null);
         battleFrame.setSize(500, 250);
         battleFrame.setResizable(false);
@@ -40,12 +40,12 @@ public class BattleScreen {
         battleFrame.add(vsLabel);
 
         JLabel terr1Label = new JLabel();
-        terr1Label.setText(terr1.Name + " (" + armee1.Count + ")");
+        terr1Label.setText(terr1.name + " (" + armee1.count + ")");
         terr1Label.setBounds(35, 10, 350, 35);
         battleFrame.add(terr1Label);
 
         JLabel terr2Label = new JLabel();
-        terr2Label.setText(terr2.Name + " (" + armee2.Count + ")");
+        terr2Label.setText(terr2.name + " (" + armee2.count + ")");
         terr2Label.setBounds(battleFrame.getWidth() - 200, 10, 350, 35);
         battleFrame.add(terr2Label);
 
@@ -68,16 +68,16 @@ public class BattleScreen {
                 if (e.getSource() == fightButton) {
                     battleLogic(armee1, armee2, rand, terr1CastOfDice, terr2CastOfDice);
 
-                    terr1Label.setText(terr1.Name + " (" + armee1.Count + ")");
-                    terr2Label.setText(terr2.Name + " (" + armee2.Count + ")");
+                    terr1Label.setText(terr1.name + " (" + armee1.count + ")");
+                    terr2Label.setText(terr2.name + " (" + armee2.count + ")");
 
-                    if (armee1.Count < 1) {
+                    if (armee1.count < 1) {
                         Working = false;
                         battleFrame.setVisible(false);
                         battleFrame.dispose();
-                    } else if (armee2.Count < 1) {
+                    } else if (armee2.count < 1) {
                         Working = false;
-                        terr2.Occupation = armee1;
+                        terr2.occupation = armee1;
                         battleFrame.setVisible(false);
                         battleFrame.dispose();
                     }
@@ -97,7 +97,7 @@ public class BattleScreen {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == cancelButton) {
                     Working = false;
-                    terr1.Occupation.Count += armee1.Count;
+                    terr1.occupation.count += armee1.count;
                     battleFrame.setVisible(false);
                     battleFrame.dispose();
                 }
@@ -113,7 +113,7 @@ public class BattleScreen {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 Working = false;
-                terr1.Occupation.Count += armee1.Count;
+                terr1.occupation.count += armee1.count;
                 battleFrame.setVisible(false);
                 battleFrame.dispose();
             }
@@ -124,14 +124,14 @@ public class BattleScreen {
     }
 
     public static void fastBattle(Armee armee1, Armee armee2, Random rand) {
-        while (armee1.Count > 0 && armee2.Count > 0) {
+        while (armee1.count > 0 && armee2.count > 0) {
             battleLogic(armee1, armee2, rand, null, null);
         }
     }
 
     private static void battleLogic(Armee armee1, Armee armee2, Random rand, JLabel rolled1, JLabel rolled2) {
         int t1 = 0, nextT1 = 0, t2 = 0, nextT2 = 0;
-        for (int i = 0; i < (armee1.Count > 3 ? 3 : armee1.Count); i++) {
+        for (int i = 0; i < (armee1.count > 3 ? 3 : armee1.count); i++) {
             int temp = rand.nextInt(6) + 1;
             if (temp > t1) {
                 nextT1 = t1;
@@ -141,7 +141,7 @@ public class BattleScreen {
             }
         }
 
-        for (int i = 0; i < (armee2.Count > 1 ? 2 : armee2.Count); i++) {
+        for (int i = 0; i < (armee2.count > 1 ? 2 : armee2.count); i++) {
             int temp = rand.nextInt(6) + 1;
             if (temp > t2) {
                 nextT2 = t2;
@@ -151,29 +151,29 @@ public class BattleScreen {
             }
         }
 
-        if (armee2.Count > 1 && armee1.Count > 1) {
+        if (armee2.count > 1 && armee1.count > 1) {
             if (nextT1 > nextT2) {
-                armee2.Count--;
+                armee2.count--;
             } else if (nextT1 > nextT2) {
-                armee1.Count--;
+                armee1.count--;
             } else {
-                armee1.Count--;
+                armee1.count--;
             }
         }
 
         if (t1 > t2) {
-            armee2.Count--;
+            armee2.count--;
         } else if (t2 > t1) {
-            armee1.Count--;
+            armee1.count--;
         } else {
-            armee1.Count--;
+            armee1.count--;
         }
 
         if (rolled1 != null) {
-            rolled1.setText((armee1.Count > 2 ? "Rolled:  " + t1 + " | " + nextT1 : "Rolled:  " + t1));
+            rolled1.setText((armee1.count > 2 ? "Rolled:  " + t1 + " | " + nextT1 : "Rolled:  " + t1));
         }
         if (rolled2 != null) {
-            rolled2.setText((armee2.Count > 2 ? "Rolled:  " + t2 + " | " + nextT2 : "Rolled:  " + t2));
+            rolled2.setText((armee2.count > 2 ? "Rolled:  " + t2 + " | " + nextT2 : "Rolled:  " + t2));
         }
     }
 }

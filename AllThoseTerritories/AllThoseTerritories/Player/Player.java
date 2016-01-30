@@ -13,32 +13,32 @@ import java.util.Random;
  */
 public abstract class Player {
     public Player(Color color, boolean player1) {
-        this.Color = color;
-        this.ImPlayer1 = player1;
-        this.Verstärkung = new Armee(player1, 0);
+        this.color = color;
+        this.imPlayer1 = player1;
+        this.verstärkung = new Armee(player1, 0);
     }
 
-    public Color Color;
-    public boolean ImPlayer1;
+    public Color color;
+    public boolean imPlayer1;
 
     public abstract String update(GameScreen.StateOfPlaying gameState, Territorium target, Random rand);
 
-    public Armee Verstärkung;
-    public Territorium LastSelected;
-    private ArmeeTransferScreen ArmeeTransfer;
-    public boolean MovedThisTurn;
+    public Armee verstärkung;
+    public Territorium lastSelected;
+    private ArmeeTransferScreen armeeTransfer;
+    public boolean movedThisTurn;
 
-    public boolean finishedTransfering() {
-        return this.ArmeeTransfer.isFinished;
+    public boolean finishedTransferring() {
+        return this.armeeTransfer.isFinished;
     }
 
     public void transferArmee(String header, String description, Armee armee1, Armee armee2, boolean armee2CanBe0) {
-        if (ArmeeTransfer == null || ArmeeTransfer.isFinished) {
-            ArmeeTransfer = new ArmeeTransferScreen(header, description, armee1, armee2, armee2CanBe0);
+        if (armeeTransfer == null || armeeTransfer.isFinished) {
+            armeeTransfer = new ArmeeTransferScreen(header, description, armee1, armee2, armee2CanBe0);
         }
     }
 
     public void addBonus(int value) {
-        this.Verstärkung.Count += value;
+        this.verstärkung.count += value;
     }
 }

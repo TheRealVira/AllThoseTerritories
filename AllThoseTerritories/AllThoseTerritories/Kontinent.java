@@ -11,67 +11,67 @@ import java.util.List;
  * Created by Thomas on 02/01/2016.
  */
 public class Kontinent {
-    private List<Territorium> Territories;
-    private int Bonus;
-    public String Name;
+    private List<Territorium> territories;
+    private int bonus;
+    public String name;
 
     public int getBonus() {
-        return this.Bonus;
+        return this.bonus;
     }
 
     public void addTerritory(Territorium territorium) {
-        if (this.Territories != null && territorium != null) {
-            this.Territories.add(territorium);
+        if (this.territories != null && territorium != null) {
+            this.territories.add(territorium);
         }
     }
 
     public Kontinent(String name, int bonus) {
-        this.Territories = new LinkedList<>();
-        this.Name = name;
-        this.Bonus = bonus;
+        this.territories = new LinkedList<>();
+        this.name = name;
+        this.bonus = bonus;
     }
 
     public Kontinent(List<Territorium> territories, String name, int bonus) {
-        this.Territories = territories;
-        this.Bonus = bonus;
-        this.Name = name;
+        this.territories = territories;
+        this.bonus = bonus;
+        this.name = name;
     }
 
     public Kontinent(Territorium territorium, String name, int bonus) {
-        this.Territories = new LinkedList<>();
-        this.Bonus = bonus;
-        this.Name = name;
+        this.territories = new LinkedList<>();
+        this.bonus = bonus;
+        this.name = name;
 
         if (territorium != null) {
-            this.Territories.add(territorium);
+            this.territories.add(territorium);
         }
     }
 
     public void draw(Graphics graphics, JFrame frame, Color player1, Color player2) {
-        if (this.Territories != null) {
+        if (this.territories != null) {
             for (Territorium terr :
-                    this.Territories) {
+                    this.territories) {
                 terr.draw(graphics, frame, player1, player2);
             }
         }
     }
 
     public void drawConnections(Graphics graphics, Dimension screenDimension) {
-        if (this.Territories != null) {
+        if (this.territories != null) {
             for (Territorium terr :
-                    this.Territories) {
+                    this.territories) {
                 terr.drawConnections(graphics, screenDimension);
             }
         }
     }
 
     public boolean allTerritoriesAreSet() {
-        if (this.Territories == null) {
+        if (this.territories == null) {
             return true;
         }
 
         for (Territorium ter :
-                this.Territories) {
+                this.territories) {
             if (!ter.isSet()) {
                 return false;
             }
@@ -81,12 +81,12 @@ public class Kontinent {
     }
 
     public Territorium getTerritoriumFromPosition(Point point, JFrame frame) {
-        if (this.Territories == null) {
+        if (this.territories == null) {
             return null;
         }
 
         for (Territorium terr :
-                this.Territories) {
+                this.territories) {
             if (terr.ContainsPoint(point, frame)) {
                 return terr;
             }
@@ -96,21 +96,21 @@ public class Kontinent {
     }
 
     public int getCountOfOwnedTerritories(boolean player1) {
-        if (this.Territories == null) {
+        if (this.territories == null) {
             return 0;
         }
 
         int toRet = 0;
         for (Territorium ter :
-                this.Territories) {
-            toRet += ter.Occupation.State != null && player1 == ter.Occupation.State ? 1 : 0;
+                this.territories) {
+            toRet += ter.occupation.state != null && player1 == ter.occupation.state ? 1 : 0;
         }
 
         return toRet;
     }
 
     public boolean ownedBy(boolean player1) {
-        return this.Territories != null && getCountOfOwnedTerritories(player1) == this.Territories.size();
+        return this.territories != null && getCountOfOwnedTerritories(player1) == this.territories.size();
     }
 
     @Nullable
@@ -118,14 +118,14 @@ public class Kontinent {
         return ownedBy(true) ? Boolean.TRUE : ownedBy(false) ? Boolean.FALSE : null;
     }
 
-    public Territorium getFirstNotOwnedTerretorium() {
-        if (this.Territories == null || this.Territories.size() == 0) {
+    public Territorium getFirstNotOwnedTerritorium() {
+        if (this.territories == null || this.territories.size() == 0) {
             return null;
         }
 
         for (Territorium ter :
-                this.Territories) {
-            if (ter.Occupation.State == null) {
+                this.territories) {
+            if (ter.occupation.state == null) {
                 return ter;
             }
         }
@@ -134,14 +134,14 @@ public class Kontinent {
     }
 
     public Territorium getHeaviestTerritory(boolean player1) {
-        if (this.Territories == null || this.Territories.size() == 0) {
+        if (this.territories == null || this.territories.size() == 0) {
             return null;
         }
 
         Territorium toRet = null;
         for (Territorium ter :
-                this.Territories) {
-            if (ter.Occupation.State != null && ter.Occupation.State == player1 && (toRet == null || toRet.Occupation.Count < ter.Occupation.Count)) {
+                this.territories) {
+            if (ter.occupation.state != null && ter.occupation.state == player1 && (toRet == null || toRet.occupation.count < ter.occupation.count)) {
                 toRet = ter;
             }
         }

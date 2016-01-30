@@ -11,7 +11,7 @@ import static Main.Tools.getCursorLocation;
  * Created by Thomas on 02/01/2016.
  */
 public class Landfläche {
-    private Polygon Boundary;
+    private Polygon boundary;
 
     public Landfläche(List<Point> boundary) {
         if (boundary != null) {
@@ -20,25 +20,25 @@ public class Landfläche {
                 x[i] = (int) boundary.get(i).getX();
                 y[i] = (int) boundary.get(i).getY();
             }
-            this.Boundary = new Polygon(x, y, boundary.size());
+            this.boundary = new Polygon(x, y, boundary.size());
         }
     }
 
     public void draw(Graphics graphics, Color color) {
-        if (this.Boundary != null) {
+        if (this.boundary != null) {
             graphics.setColor(color);
-            graphics.fillPolygon(this.Boundary);
+            graphics.fillPolygon(this.boundary);
             graphics.setColor(Color.DARK_GRAY);
             Graphics2D g2D = ((Graphics2D) graphics);
             g2D.setRenderingHint(
                     RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
             g2D.setStroke(new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            graphics.drawPolygon(this.Boundary);
+            graphics.drawPolygon(this.boundary);
         }
     }
 
     public boolean cursorHover(JFrame frame) {
-        return this.Boundary != null && this.Boundary.contains(getCursorLocation(frame));
+        return this.boundary != null && this.boundary.contains(getCursorLocation(frame));
     }
 }

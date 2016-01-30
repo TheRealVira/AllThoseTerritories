@@ -22,79 +22,79 @@ public class Human extends Player {
         switch (gameState) {
             case Expansion: // Phase Landerwerb
                 if (!target.isSet()) {
-                    if (this.LastSelected != null) {
-                        this.LastSelected.set(null, 0);
+                    if (this.lastSelected != null) {
+                        this.lastSelected.set(null, 0);
                     }
 
-                    target.set(this.ImPlayer1, 1);
-                    this.LastSelected = target;
-                    return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "claimed " + target.Name + ".";
+                    target.set(this.imPlayer1, 1);
+                    this.lastSelected = target;
+                    return (this.imPlayer1 ? "Player1 " : "Player2 ") + "claimed " + target.name + ".";
                 }
                 break;
             case Reinforcing: // Select Country
-                MovedThisTurn = false;
-                return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "now has " + this.Verstärkung.Count + " reinforcements.";
+                movedThisTurn = false;
+                return (this.imPlayer1 ? "Player1 " : "Player2 ") + "now has " + this.verstärkung.count + " reinforcements.";
             case SelectFirstTerritory: // Select Country
-                this.LastSelected = target;
-                return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "selected " + target.Name + ".";
+                this.lastSelected = target;
+                return (this.imPlayer1 ? "Player1 " : "Player2 ") + "selected " + target.name + ".";
             case SelectSecondTerritory: // Select Country
-                if (LastSelected != null && LastSelected.containsTerritorium(target.Name) || target.Name.equals(LastSelected.Name)) {  // Claim
-                    if (target == this.LastSelected && target != null && target.Occupation.State == this.ImPlayer1) {
+                if (lastSelected != null && lastSelected.containsTerritorium(target.name) || target.name.equals(lastSelected.name)) {  // Claim
+                    if (target == this.lastSelected && target != null && target.occupation.state == this.imPlayer1) {
                         transferArmee(
-                                "Set the reinforcement of your backhand or " + target.Name,
-                                "Please select, how many will be in " + target.Name + ":",
-                                target.Occupation,
-                                this.Verstärkung,
+                                "Set the reinforcement of your backhand or " + target.name,
+                                "Please select, how many will be in " + target.name + ":",
+                                target.occupation,
+                                this.verstärkung,
                                 true);
 
-                        return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.Name + " and the backhand.";
-                    } else if (!MovedThisTurn && target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) { // Transfer
+                        return (this.imPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.name + " and the backhand.";
+                    } else if (!movedThisTurn && target.occupation.state != null && target.occupation.state == this.verstärkung.state && target.occupation.state == lastSelected.occupation.state) { // Transfer
                         transferArmee(
-                                "Set the reinforcement of " + LastSelected.Name + " or " + target.Name,
-                                "Please select, how many should be in " + target.Name + ":",
-                                target.Occupation,
-                                LastSelected.Occupation,
+                                "Set the reinforcement of " + lastSelected.name + " or " + target.name,
+                                "Please select, how many should be in " + target.name + ":",
+                                target.occupation,
+                                lastSelected.occupation,
                                 false);
 
-                        MovedThisTurn = true;
-                        String lastName = LastSelected.Name;
-                        LastSelected = null;
-                        return (this.ImPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.Name + " and " + lastName + ".";
-                    } else if (!MovedThisTurn && target.Occupation.State != null && target.Occupation.State == this.Verstärkung.State && target.Occupation.State == LastSelected.Occupation.State) {
+                        movedThisTurn = true;
+                        String lastName = lastSelected.name;
+                        lastSelected = null;
+                        return (this.imPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.name + " and " + lastName + ".";
+                    } else if (!movedThisTurn && target.occupation.state != null && target.occupation.state == this.verstärkung.state && target.occupation.state == lastSelected.occupation.state) {
                         return "Cann't move again this turn";
-                    } else if (target.Occupation.State != null && target.Occupation.State != LastSelected.Occupation.State) { // Attack
-                        Armee attackOfTheTitans = new Armee(this.ImPlayer1, 0);
-                        Territorium myTerritorium = target.Occupation.State == this.ImPlayer1 ? target : this.LastSelected; // Get sure, which ones are the players armees
-                        if (myTerritorium.Occupation.Count > 1) {
-                            Territorium atackedOne = myTerritorium == target ? this.LastSelected : target;
-                            transferArmee("Attack " + atackedOne.Name, "How many armies should attack " + atackedOne.Name + "?", attackOfTheTitans, myTerritorium.Occupation, false);
+                    } else if (target.occupation.state != null && target.occupation.state != lastSelected.occupation.state) { // Attack
+                        Armee attackOfTheTitans = new Armee(this.imPlayer1, 0);
+                        Territorium myTerritorium = target.occupation.state == this.imPlayer1 ? target : this.lastSelected; // Get sure, which ones are the players armees
+                        if (myTerritorium.occupation.count > 1) {
+                            Territorium attackedOne = myTerritorium == target ? this.lastSelected : target;
+                            transferArmee("Attack " + attackedOne.name, "How many armies should attack " + attackedOne.name + "?", attackOfTheTitans, myTerritorium.occupation, false);
 
-                            Thread atack = new Thread() {
+                            Thread attackThread = new Thread() {
                                 @Override
                                 public void run() {
                                     super.run();
-                                    while (!finishedTransfering()) {
+                                    while (!finishedTransferring()) {
                                         try {
-                                            Thread.sleep(100l); // It was too fast and never got out of the loop, so I had to make it slower...
+                                            Thread.sleep(100l); // It was too fast and never got out of the loop, so it had to be slower...
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }
                                     } // Wait till finished selecting
 
-                                    if (attackOfTheTitans.Count != 0) {
-                                        BattleScreen.fight(myTerritorium, atackedOne, attackOfTheTitans, atackedOne.Occupation, rand);
+                                    if (attackOfTheTitans.count != 0) {
+                                        BattleScreen.fight(myTerritorium, attackedOne, attackOfTheTitans, attackedOne.occupation, rand);
                                     }
                                 }
                             };
-                            atack.start();
+                            attackThread.start();
 
-                            return myTerritorium.Name + " attacked " + atackedOne.Name + "!";
+                            return myTerritorium.name + " attacked " + attackedOne.name + "!";
                         } else {
-                            return myTerritorium.Name + " has to less armies and can't fight!";
+                            return myTerritorium.name + " has too few armies and can't fight!";
                         }
                     }
-                } else if (!LastSelected.containsTerritorium(target.Name)) {
-                    return "They aren't neigbors...";
+                } else if (!lastSelected.containsTerritorium(target.name)) {
+                    return "They aren't neighbors...";
                 }
 
                 return "Canceled moves";
