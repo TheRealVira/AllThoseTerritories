@@ -39,6 +39,8 @@ public class GameScreen extends JFrame {
     private Timer pcTimer, drawTimer;
     private JLabel backgroundLabel;
 
+    private final static int UI_OFFSET=105;
+
     /*
     0=Exit
     1=Landerwerb
@@ -70,7 +72,7 @@ public class GameScreen extends JFrame {
 
     private void initFrame() {
         setLayout(null);
-        setSize(Main.DEFAULT_FRAME_SIZE);
+        setSize(new Dimension(Main.DEFAULT_FRAME_SIZE.width,Main.DEFAULT_FRAME_SIZE.height+UI_OFFSET));
         setResizable(false);
     }
 
@@ -81,19 +83,19 @@ public class GameScreen extends JFrame {
         this.map.setVisible(true);
         this.map.setLayout(null);
 
-        this.consoleLabel.setBounds(25, this.map.getHeight() - 75, this.map.getWidth() - 200, 35);
-        this.suggestionLabel.setBounds(25, this.map.getHeight() - 105, this.map.getWidth() - 200, 35);
+        this.consoleLabel.setBounds(25, this.map.getHeight() - 65, this.map.getWidth() - 200, 35);
+        this.suggestionLabel.setBounds(25, this.map.getHeight() - 95, this.map.getWidth() - 200, 35);
 
-        this.nextRoundButton.setBounds(this.map.getWidth() - 185, getHeight() - 85, 150, 35);
+        this.nextRoundButton.setBounds(this.map.getWidth() - 185, getHeight() - 75, 150, 35);
         this.nextRoundButton.setText("Next Round");
         this.nextRoundButton.setVisible(false);
 
-        this.cancelSelectionButton.setBounds(this.map.getWidth() - 185, getHeight() - 120, 150, 35);
+        this.cancelSelectionButton.setBounds(this.map.getWidth() - 375, getHeight() - 75, 150, 35);
         this.cancelSelectionButton.setText("Cancel selection");
         this.cancelSelectionButton.setVisible(false);
 
-        this.turnOwnerLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 75, 150, 35);
-        this.reinforcementLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 105, 150, 35);
+        this.turnOwnerLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 65, 150, 35);
+        this.reinforcementLabel.setBounds(getWidth() / 2 - 35, this.map.getHeight() - 95, 150, 35);
 
         this.backgroundLabel = new JLabel();
         this.backgroundLabel.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/Sprites/GameBackground.png")));
@@ -122,7 +124,7 @@ public class GameScreen extends JFrame {
                 if (continents != null) {
                     for (Kontinent c : continents) {
                         if (c != null) {
-                            c.drawConnections(g, new Dimension(getWidth(), getHeight()));
+                            c.drawConnections(g, Main.DEFAULT_FRAME_SIZE);
                         }
                     }
 
@@ -133,6 +135,9 @@ public class GameScreen extends JFrame {
                     }
                 }
                 //endregion
+
+                g.setColor(Color.black);
+                g.drawRect(0,0,getWidth(),getHeight());
 
                 //region Update Buttons and Labels
                 // Set visibility of nextRoundButton and update it.

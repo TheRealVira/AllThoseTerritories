@@ -52,6 +52,10 @@ public class Tools {
                             (dimension.getHeight()/2-point2.getY()):point2.getY())
             );
 
+            if(calculatedPoint.getY()>dimension.getHeight()){
+                calculatedPoint.setLocation(calculatedPoint.getX(),dimension.getHeight());
+            }
+
             drawLine(graphics,point1,calculatedPoint,strokeWidth,color);
         }
     }
