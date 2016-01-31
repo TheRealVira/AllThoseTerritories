@@ -10,9 +10,7 @@ import java.util.List;
 import static Main.Tools.brightenColor;
 import static Main.Tools.drawLineWithScreenWrap;
 
-/**
- * Created by Thomas on 02/01/2016.
- */
+
 public class Territorium {
     private List<Landfläche> countries;
     public String name;

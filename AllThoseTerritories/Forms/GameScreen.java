@@ -15,9 +15,7 @@ import java.util.Random;
 import static Main.Tools.getCursorLocation;
 import static Main.Tools.hexColorCode;
 
-/**
- * Created by Thomas on 03/01/2016.
- */
+
 public class GameScreen extends JFrame {
     private JPanel map = new JPanel();
 
@@ -348,11 +346,6 @@ public class GameScreen extends JFrame {
                     return;
                 }
             }
-
-            // TODO: Welcher State sollte in dieser Methode aufgerufen werden?
-            //this.StatesOfPlaying++;
-
-            // Temporär!
             this.currentState = StateOfPlaying.SelectFirstTerritory;
 
             this.cancelSelectionButton.setVisible(false);

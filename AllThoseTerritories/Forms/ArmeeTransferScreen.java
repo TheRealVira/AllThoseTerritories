@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/**
- * Created by Thomas on 05/01/2016.
- */
+
 // Extends JDialog instead of JFrame, since the TransferScreen is essentially a sub-frame of the calling Frame and should always be on top of it.
 public class ArmeeTransferScreen extends JDialog {
     private JComboBox armyCountBox = new JComboBox();

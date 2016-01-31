@@ -10,9 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
 
-/**
- * Created by Thomas on 05/01/2016.
- */
+
 public class BattleScreen {
     private static boolean Working;
 

@@ -13,12 +13,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Thomas on 03/01/2016.
- */
+
 public class IOHelper {
     public static List<Kontinent> createPlayingFieldsFromFile(String file) {
-        // TODO: Add I/O logik and return a new list containing all the continents of the file.
         //return null;
         /*List<Point>points=new LinkedList<Point>();
         points.add(new Point(0,0));

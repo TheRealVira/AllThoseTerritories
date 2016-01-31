@@ -40,13 +40,11 @@ public class Computer extends Player {
                     if (target == this.lastSelected && target != null && target.occupation.state == this.imPlayer1) {
                         target.occupation.count += this.verstärkung.count;
                         this.verstärkung.count = 0;
-                        // TODO: Maybe add something smarter...
 
                         return (this.imPlayer1 ? "Player1 " : "Player2 ") + "is transferring some reinforcements between " + target.name + " and the backhand.";
                     } else if (!movedThisTurn && target.occupation.state != null && target.occupation.state == this.verstärkung.state && target.occupation.state == lastSelected.occupation.state) { // Transfer
                         target.occupation.count += lastSelected.occupation.count - 1;
                         lastSelected.occupation.count = 1;
-                        // TODO: maybe add something smarter...
 
                         movedThisTurn = true;
                         String lastname = lastSelected.name;

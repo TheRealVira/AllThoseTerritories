@@ -3,9 +3,7 @@ package Main;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by Thomas on 02/01/2016.
- */
+
 public class Tools {
 
     /*

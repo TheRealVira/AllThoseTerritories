@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 
 import static Main.Tools.negateColor;
 
-/**
- * Created by Thomas on 03/01/2016.
- */
+
 public class ColorChooserButton extends JButton {
     public Color MyColor;
 

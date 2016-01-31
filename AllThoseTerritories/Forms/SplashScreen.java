@@ -4,9 +4,6 @@ import Main.Main;
 
 import javax.swing.*;
 
-/**
- * Created by Thomas on 01/01/2016.
- */
 public class SplashScreen extends JFrame {
 
     public SplashScreen(String resource) {

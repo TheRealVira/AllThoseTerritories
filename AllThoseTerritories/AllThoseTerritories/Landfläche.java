@@ -6,9 +6,7 @@ import java.util.List;
 
 import static Main.Tools.getCursorLocation;
 
-/**
- * Created by Thomas on 02/01/2016.
- */
+
 public class Landfläche {
     private Polygon boundary;
 

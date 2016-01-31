@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Thomas on 01/01/2016.
- */
+
 public class WinnerScreen extends JFrame {
     public WinnerScreen(boolean isPlayer1Winner) {
         super((isPlayer1Winner ? "Player1" : "Player2") + " Won!!!");

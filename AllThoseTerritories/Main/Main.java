@@ -6,9 +6,7 @@ import Forms.SplashScreen;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Main.Main class to initialize everything. This is where it all begins.
- */
+
 public class Main {
     // We have to add 29 px to spacing issues with swing...
     public static final Dimension DEFAULT_FRAME_SIZE = new Dimension(1250, 679);

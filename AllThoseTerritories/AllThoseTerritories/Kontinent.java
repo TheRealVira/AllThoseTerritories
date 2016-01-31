@@ -7,9 +7,7 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Thomas on 02/01/2016.
- */
+
 public class Kontinent {
     private List<Territorium> territories;
     private int bonus;
@@ -29,22 +27,6 @@ public class Kontinent {
         this.territories = new LinkedList<>();
         this.name = name;
         this.bonus = bonus;
-    }
-
-    public Kontinent(List<Territorium> territories, String name, int bonus) {
-        this.territories = territories;
-        this.bonus = bonus;
-        this.name = name;
-    }
-
-    public Kontinent(Territorium territorium, String name, int bonus) {
-        this.territories = new LinkedList<>();
-        this.bonus = bonus;
-        this.name = name;
-
-        if (territorium != null) {
-            this.territories.add(territorium);
-        }
     }
 
     public void draw(Graphics graphics, JFrame frame, Color player1, Color player2) {

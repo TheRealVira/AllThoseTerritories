@@ -14,9 +14,7 @@ import java.util.List;
 
 import static Main.IOHelper.createPlayingFieldsFromFile;
 
-/**
- * Created by Thomas on 01/01/2016.
- */
+
 public class MainMenuScreen extends JFrame {
     private JButton startButton = new JButton("Start Game");
     private JButton exitButton = new JButton("Exit");
